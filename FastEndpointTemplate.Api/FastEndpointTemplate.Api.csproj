@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FastEndpoints" Version="4.4.0" />
+        <PackageReference Include="FastEndpoints.Swagger" Version="4.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\FastEndpointTemplate.Application\FastEndpointTemplate.Application.csproj" />
+        <ProjectReference Include="..\FastEndpointTemplate.Persistence\FastEndpointTemplate.Persistence.csproj" />
+        <ProjectReference Include="..\FastEndpointTemplate.Shared\FastEndpointTemplate.Shared.csproj" />
+    </ItemGroup>
+
+</Project>
