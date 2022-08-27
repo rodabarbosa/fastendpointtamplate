@@ -1,17 +1,18 @@
+using FastEndpointTemplate.Domain.Entities;
 using FastEndpointTemplate.Domain.Repositories;
 using FastEndpointTemplate.Shared.Contracts;
 using FastEndpointTemplate.Shared.Enumerators;
 using FastEndpointTemplate.Shared.Extensions;
 using FastEndpointTemplate.Shared.Models;
 
-namespace FastEndpointTemplate.Application.Handlers.WeatherForecast;
+namespace FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 
-public class GetWeatherForecastHandler : IGetWeatherForecastHandler
+public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
 {
     private const double Tolerance = 1e-6;
     private readonly IWeatherForecastRepository _weatherForecastRepository;
 
-    public GetWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    public GetAllWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
     {
         _weatherForecastRepository = weatherForecastRepository;
     }
@@ -36,7 +37,7 @@ public class GetWeatherForecastHandler : IGetWeatherForecastHandler
             .ToList();
     }
 
-    private static IQueryable<Domain.Entities.WeatherForecast> FilterByDate(IQueryable<Domain.Entities.WeatherForecast> weathers, string param)
+    private static IQueryable<WeatherForecast> FilterByDate(IQueryable<WeatherForecast> weathers, string param)
     {
         var filter = ExtractDateParam(param);
         if (filter is null)
@@ -80,7 +81,7 @@ public class GetWeatherForecastHandler : IGetWeatherForecastHandler
         return default;
     }
 
-    private static IQueryable<Domain.Entities.WeatherForecast> FilterByTemperatureCelsius(IQueryable<Domain.Entities.WeatherForecast> weathers, string param)
+    private static IQueryable<WeatherForecast> FilterByTemperatureCelsius(IQueryable<WeatherForecast> weathers, string param)
     {
         var filter = ExtractTemperatureCelsiusParam(param);
         if (filter is null)
@@ -103,7 +104,7 @@ public class GetWeatherForecastHandler : IGetWeatherForecastHandler
         return GetTemperature(param, "temperatureCelsius");
     }
 
-    private static IQueryable<Domain.Entities.WeatherForecast> FilterByTemperatureFahrenheit(IQueryable<Domain.Entities.WeatherForecast> weathers, string param)
+    private static IQueryable<WeatherForecast> FilterByTemperatureFahrenheit(IQueryable<WeatherForecast> weathers, string param)
     {
         var filter = ExtractTemperatureFahrenheitParam(param);
         if (filter == null)

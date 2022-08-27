@@ -1,6 +1,6 @@
 ﻿namespace FastEndpointTemplate.Shared.Contracts;
 
-public class GetWeatherForecastRequestContract
+public class DeleteWeatherForecastRequestContract
 {
     public Guid? Id { get; set; }
 }

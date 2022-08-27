@@ -1,8 +1,8 @@
 using FastEndpointTemplate.Shared.Contracts;
 
-namespace FastEndpointTemplate.Application.Handlers.WeatherForecast;
+namespace FastEndpointTemplate.Application.Handlers;
 
-public interface IGetWeatherForecastHandler
+public interface IGetAllWeatherForecastHandler
 {
     Task<IEnumerable<WeatherForecastContract>> Handle(string param);
 }

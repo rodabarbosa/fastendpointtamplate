@@ -1,11 +1,12 @@
 using FastEndpoints;
+using FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 using FastEndpointTemplate.Shared.Contracts;
 
-namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
+namespace FastEndpointTemplate.Api.Endpoints.Summaries;
 
-public class GetWeatherForecastEndpointSummary : Summary<GetWeatherForecestEndpoint>
+public class GetAllWeatherForecastEndpointSummary : Summary<GetAllWeatherForecastEndpoint>
 {
-    public GetWeatherForecastEndpointSummary()
+    public GetAllWeatherForecastEndpointSummary()
     {
         Summary = "Gets the weather forecast";
         Description = @"Method to get list of weather forecast or to query for some specific weather forecast

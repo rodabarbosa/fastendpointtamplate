@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FastEndpoints" Version="4.4.0" />
+    </ItemGroup>
+
 </Project>
