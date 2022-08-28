@@ -12,9 +12,6 @@ public class CreateWeatherForecastEndpointSummary : Summary<CreateWeatherForecas
         Description = @"Method to create weather forecast";
         Response<WeatherForecastContract>(200, "Weather forecast created.");
         Response<ErrorContract>(400, "Bad request.");
-        // Response<ErrorContract>(401, "Unauthorized.");
-        // Response<ErrorContract>(403, "Forbidden.");
-        // Response<ErrorContract>(404, "Not found.");
         Response<ErrorContract>(500, "Internal server error.");
     }
 }

@@ -1,7 +1,6 @@
 ﻿using FastEndpoints;
 using FastEndpointTemplate.Application.Handlers;
 using FastEndpointTemplate.Shared.Contracts;
-using FastEndpointTemplate.Shared.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
@@ -19,8 +18,6 @@ public class DeleteWeatherForecastEndpoint : Endpoint<DeleteWeatherForecastReque
 
     public override async Task HandleAsync(DeleteWeatherForecastRequestContract req, CancellationToken ct)
     {
-        BadRequestException.ThrowIf(req.Id is null, "weather forecast id not informed");
-
         await _handler.Handle(req.Id ?? Guid.Empty);
 
         Response = new DeleteResponseContract { Success = true };

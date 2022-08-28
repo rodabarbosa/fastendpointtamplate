@@ -36,7 +36,7 @@ public class UpdateWeatherForecastHandler : IUpdateWeatherForecastHandler
     private Task UpdateWeatherForecast(WeatherForecastContract contract, WeatherForecast weather)
     {
         weather.Date = contract.Date.Value;
-        weather.TemperatureCelsius = contract.TemperatureCelsius;
+        weather.TemperatureCelsius = contract.TemperatureCelsius ?? default;
         weather.Summary = contract.Summary;
 
         return _weatherForecastRepository.UpdateAsync(weather);

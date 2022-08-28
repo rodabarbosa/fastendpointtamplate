@@ -12,9 +12,6 @@ public class DeleteWeatherForecastEndpointSummary : Summary<DeleteWeatherForecas
         Description = @"Method to delete weather forecast";
         Response<DeleteResponseContract>(200, "Weather forecast Deleted.");
         Response<ErrorContract>(400, "Bad request.");
-        // Response<ErrorContract>(401, "Unauthorized.");
-        // Response<ErrorContract>(403, "Forbidden.");
-        // Response<ErrorContract>(404, "Not found.");
         Response<ErrorContract>(500, "Internal server error.");
     }
 }

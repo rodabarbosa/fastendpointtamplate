@@ -1,0 +1,6 @@
+﻿POST https://localhost:7055/weatherforecast
+{
+  "date": "2022-08-28T00:00:00",
+  "temperatureCelsius": 15,
+  "summary": "Creating Test"
+}

@@ -10,11 +10,8 @@ public class UpdateWeatherForecastEndpointSummary : Summary<UpdateWeatherForecas
     {
         Summary = "Update a weather forecast";
         Description = @"Method to Update weather forecast";
-        Response<DeleteResponseContract>(200, "Weather forecast updated.");
+        Response<WeatherForecastContract>(200, "Weather forecast updated.");
         Response<ErrorContract>(400, "Bad request.");
-        // Response<ErrorContract>(401, "Unauthorized.");
-        // Response<ErrorContract>(403, "Forbidden.");
-        // Response<ErrorContract>(404, "Not found.");
         Response<ErrorContract>(500, "Internal server error.");
     }
 }

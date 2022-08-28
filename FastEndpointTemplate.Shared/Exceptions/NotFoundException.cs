@@ -8,24 +8,24 @@ public class NotFoundException : Exception
     {
     }
 
-    public NotFoundException(string message) : this(message, default)
+    public NotFoundException(string? message) : this(message, default)
     {
     }
 
-    public NotFoundException(Exception innerException) : this(DefaultMessage, innerException)
+    public NotFoundException(Exception? innerException) : this(DefaultMessage, innerException)
     {
     }
 
-    public NotFoundException(string message, Exception innerException) : base(DefineMessage(message, DefaultMessage), innerException)
+    public NotFoundException(string? message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
     {
     }
 
-    private static string DefineMessage(string message, string defaultMessage)
+    private static string DefineMessage(string? message, string defaultMessage)
     {
         return string.IsNullOrEmpty(message?.Trim()) ? defaultMessage : message;
     }
 
-    public static void ThrowIf(bool condition, string message, Exception innerException = default)
+    public static void ThrowIf(bool condition, string? message, Exception? innerException = default)
     {
         if (condition) throw new NotFoundException(message, innerException);
     }

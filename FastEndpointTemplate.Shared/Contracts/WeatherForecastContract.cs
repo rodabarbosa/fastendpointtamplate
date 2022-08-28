@@ -20,15 +20,15 @@ public class WeatherForecastContract
     /// <summary>
     /// Temperature in celsius unit.
     /// </summary>
-    public double TemperatureCelsius { get; set; }
+    public double? TemperatureCelsius { get; set; }
 
     /// <summary>
     /// Temperature in fahrenheit unit.
     /// </summary>
-    public double TemperatureFahrenheit
+    public double? TemperatureFahrenheit
     {
-        get => TemperatureCelsius.ToFahrenheit();
-        set => TemperatureCelsius = value.ToCelsius();
+        get => TemperatureCelsius?.ToFahrenheit();
+        set => TemperatureCelsius = value?.ToCelsius();
     }
 
     /// <summary>

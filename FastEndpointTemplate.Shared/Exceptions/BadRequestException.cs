@@ -8,24 +8,24 @@ public class BadRequestException : Exception
     {
     }
 
-    public BadRequestException(string message) : this(message, default)
+    public BadRequestException(string? message) : this(message, default)
     {
     }
 
-    public BadRequestException(Exception innerException) : this(DefaultMessage, innerException)
+    public BadRequestException(Exception? innerException) : this(DefaultMessage, innerException)
     {
     }
 
-    public BadRequestException(string message, Exception innerException) : base(DefineMessage(message, DefaultMessage), innerException)
+    public BadRequestException(string? message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
     {
     }
 
-    private static string DefineMessage(string message, string defaultMessage)
+    private static string DefineMessage(string? message, string defaultMessage)
     {
         return string.IsNullOrEmpty(message?.Trim()) ? defaultMessage : message;
     }
 
-    public static void ThrowIf(bool condition, string message, Exception innerException = null)
+    public static void ThrowIf(bool condition, string? message, Exception? innerException = null)
     {
         if (condition) throw new BadRequestException(message, innerException);
     }

@@ -14,7 +14,7 @@ public static class WeatherForecastConverter
         {
             Id = contract.Id ?? Guid.Empty,
             Date = contract.Date ?? default,
-            TemperatureCelsius = contract.TemperatureCelsius,
+            TemperatureCelsius = contract.TemperatureCelsius ?? default,
             Summary = contract.Summary
         };
     }
