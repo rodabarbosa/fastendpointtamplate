@@ -5,7 +5,7 @@ using System.Net;
 
 namespace FastEndpointTemplate.Api.Extensions;
 
-public static class WebApplicationExceptionHandlerExtension
+public static class ExceptionHandlerExtension
 {
     public static void UseCustomExceptionHandler(this IApplicationBuilder app)
     {

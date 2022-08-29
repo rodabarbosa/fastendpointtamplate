@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
 [HttpDelete("/weatherforecast/{id}")]
-[AllowAnonymous]
+[Authorize("Bearer")]
 public class DeleteWeatherForecastEndpoint : Endpoint<DeleteWeatherForecastRequestContract, DeleteResponseContract>
 {
     private readonly IDeleteWeatherForecastHandler _handler;

@@ -2,7 +2,7 @@
 
 namespace FastEndpointTemplate.Api.Extensions;
 
-public static class ServiceSwaggerExtension
+public static class SwaggerExtension
 {
     public static void AddSwagger(this IServiceCollection services)
     {
@@ -15,7 +15,7 @@ public static class ServiceSwaggerExtension
 
     public static void UseSwaggerDoc(this IApplicationBuilder app)
     {
-        app.UseOpenApi(); //add this
-        app.UseSwaggerUi3(s => s.ConfigureDefaults()); //add this
+        app.UseOpenApi();
+        app.UseSwaggerUi3(s => s.ConfigureDefaults());
     }
 }

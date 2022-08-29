@@ -9,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddResponseCompression();
 
+var configuration = builder.Configuration;
+
+builder.Services.AddJwtService(configuration);
+
 builder.Services.AddDatabase("Template");
 
 builder.Services.AddAuthorization();
@@ -49,7 +53,7 @@ app.UseFastEndpoints(c =>
         return httpResponse.WriteAsync(responseText, ct);
     };
 
-    // Handles Valdiation errors
+    // Handles Validation errors
     c.ErrorResponseBuilder = (failures, status) =>
     {
         var errorMessages = new Dictionary<string, string>();
@@ -66,5 +70,7 @@ app.UseFastEndpoints(c =>
 });
 
 app.UseSwaggerDoc();
+
+app.UseHttpsRedirection();
 
 app.Run();

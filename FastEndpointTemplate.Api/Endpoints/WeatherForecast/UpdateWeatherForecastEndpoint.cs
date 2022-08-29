@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
 [HttpPut("/weatherforecast/{id}")]
-[AllowAnonymous]
+[Authorize("Bearer")]
 public class UpdateWeatherForecastEndpoint : Endpoint<UpdateWeatherForecastRequestContract, WeatherForecastContract>
 {
     private readonly IUpdateWeatherForecastHandler _handler;

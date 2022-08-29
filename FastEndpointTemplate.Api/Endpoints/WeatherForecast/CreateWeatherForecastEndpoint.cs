@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
 [HttpPost("/weatherforecast")]
-[AllowAnonymous]
+[Authorize("Bearer")]
 public class CreateWeatherForecastEndpoint : Endpoint<CreateWeatherForecastRequestContract, WeatherForecastContract>
 {
     private readonly ICreateWeatherForecastHandler _handler;
