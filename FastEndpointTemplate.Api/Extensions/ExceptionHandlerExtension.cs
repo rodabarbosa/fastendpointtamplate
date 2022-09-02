@@ -41,7 +41,7 @@ public static class ExceptionHandlerExtension
         if (exception is NotFoundException)
             return new ErrorContract
             {
-                Code = (int)HttpStatusCode.BadRequest,
+                Code = (int)HttpStatusCode.NotFound,
                 Error = exception.Message,
                 Exception = nameof(NotFoundException),
                 StackTrace = exception.StackTrace
@@ -52,7 +52,7 @@ public static class ExceptionHandlerExtension
             {
                 Code = (int)HttpStatusCode.BadRequest,
                 Error = exception.Message,
-                Exception = nameof(NotFoundException),
+                Exception = nameof(BadRequestException),
                 StackTrace = exception.StackTrace
             };
 

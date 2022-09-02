@@ -2,6 +2,7 @@
 using FastEndpointTemplate.Application.Handlers;
 using FastEndpointTemplate.Shared.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
 
 namespace FastEndpointTemplate.Api.Endpoints.Authentications;
 
@@ -18,6 +19,8 @@ public class AuthenticateEndpoint : Endpoint<AuthenticationRequestContract, Auth
 
     public override async Task HandleAsync(AuthenticationRequestContract req, CancellationToken ct)
     {
-        Response = await _authenticationHandler.Handle(req.Authentication);
+        var authentication = await _authenticationHandler.Handle(req.Authentication);
+
+        await SendAsync(authentication, (int)HttpStatusCode.Created, ct);
     }
 }

@@ -9,7 +9,6 @@ public class UpdateWeatherForecastRequestValidator : Validator<UpdateWeatherFore
     {
         RuleFor(x => x.Id)
             .NotEmpty()
-            .NotNull()
             .NotEqual(Guid.Empty);
 
         RuleFor(x => x.WeatherForecast)
@@ -18,7 +17,6 @@ public class UpdateWeatherForecastRequestValidator : Validator<UpdateWeatherFore
 
         RuleFor(x => x.WeatherForecast.Date)
             .NotEmpty()
-            .NotNull()
             .GreaterThan(DateTime.MinValue)
             .LessThanOrEqualTo(DateTime.Now);
 

@@ -10,7 +10,7 @@ public class AuthenticateEndpointSummary : Summary<AuthenticateEndpoint>
     {
         Summary = "Authenticate user";
         Description = "Authenticate user";
-        Response<AuthenticationResponseContract>(200, "Authenticated");
+        Response<AuthenticationResponseContract>(201, "Authenticated");
         Response<ErrorContract>(400, "Bad request.");
         Response<ErrorContract>(500, "Internal server error.");
     }

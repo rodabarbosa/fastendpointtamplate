@@ -3,6 +3,7 @@ using FastEndpointTemplate.Application.Handlers;
 using FastEndpointTemplate.Shared.Contracts;
 using FastEndpointTemplate.Shared.Exceptions;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
 
 namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
@@ -24,6 +25,6 @@ public class UpdateWeatherForecastEndpoint : Endpoint<UpdateWeatherForecastReque
 
         var response = await _handler.Handle(req.Id ?? Guid.Empty, req.WeatherForecast);
 
-        Response = response;
+        await SendAsync(response, (int)HttpStatusCode.NoContent, ct);
     }
 }

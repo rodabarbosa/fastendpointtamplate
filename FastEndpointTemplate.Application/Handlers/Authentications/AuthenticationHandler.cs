@@ -1,5 +1,6 @@
 ﻿using FastEndpointTemplate.Domain.Repositories;
 using FastEndpointTemplate.Shared.Contracts;
+using FastEndpointTemplate.Shared.Exceptions;
 using FastEndpointTemplate.Shared.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,8 +27,8 @@ public class AuthenticationHandler : IAuthenticationHandler
     public async Task<AuthenticationResponseContract> Handle(AuthenticationContract contract)
     {
         var validCredentials = await _userRepository.IsUserValidAsync(contract.Username, contract.Password);
-        if (!validCredentials)
-            return new AuthenticationResponseContract();
+
+        BadRequestException.ThrowIf(!validCredentials, "Não foi possível autenticar o usuário");
 
         var identity = CreateIdentity();
 

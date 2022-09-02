@@ -10,7 +10,7 @@ public class DeleteWeatherForecastEndpointSummary : Summary<DeleteWeatherForecas
     {
         Summary = "Delete a weather forecast";
         Description = @"Method to delete weather forecast";
-        Response<DeleteResponseContract>(200, "Weather forecast Deleted.");
+        Response<DeleteResponseContract>(204, "Weather forecast Deleted.");
         Response<ErrorContract>(400, "Bad request.");
         Response<ErrorContract>(500, "Internal server error.");
     }

@@ -9,7 +9,6 @@ public class DeleteWeatherForecastRequestValidator : Validator<DeleteWeatherFore
     {
         RuleFor(x => x.Id)
             .NotEmpty()
-            .NotNull()
             .NotEqual(Guid.Empty);
     }
 }

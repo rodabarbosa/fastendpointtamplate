@@ -10,7 +10,7 @@ public class UpdateWeatherForecastEndpointSummary : Summary<UpdateWeatherForecas
     {
         Summary = "Update a weather forecast";
         Description = @"Method to Update weather forecast";
-        Response<WeatherForecastContract>(200, "Weather forecast updated.");
+        Response<WeatherForecastContract>(204, "Weather forecast updated.");
         Response<ErrorContract>(400, "Bad request.");
         Response<ErrorContract>(500, "Internal server error.");
     }

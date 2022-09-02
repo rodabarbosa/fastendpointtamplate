@@ -10,7 +10,7 @@ public class CreateWeatherForecastEndpointSummary : Summary<CreateWeatherForecas
     {
         Summary = "Create a weather forecast";
         Description = @"Method to create weather forecast";
-        Response<WeatherForecastContract>(200, "Weather forecast created.");
+        Response<WeatherForecastContract>(201, "Weather forecast created.");
         Response<ErrorContract>(400, "Bad request.");
         Response<ErrorContract>(500, "Internal server error.");
     }

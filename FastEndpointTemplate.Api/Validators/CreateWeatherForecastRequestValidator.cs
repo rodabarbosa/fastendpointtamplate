@@ -13,7 +13,6 @@ public class CreateWeatherForecastRequestValidator : Validator<CreateWeatherFore
 
         RuleFor(x => x.WeatherForecast.Date)
             .NotEmpty()
-            .NotNull()
             .NotEqual(DateTime.MinValue)
             .LessThanOrEqualTo(DateTime.Now);
 

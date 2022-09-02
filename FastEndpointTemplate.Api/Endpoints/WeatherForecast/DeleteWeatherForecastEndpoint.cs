@@ -2,6 +2,7 @@
 using FastEndpointTemplate.Application.Handlers;
 using FastEndpointTemplate.Shared.Contracts;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
 
 namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
@@ -20,6 +21,8 @@ public class DeleteWeatherForecastEndpoint : Endpoint<DeleteWeatherForecastReque
     {
         await _handler.Handle(req.Id ?? Guid.Empty);
 
-        Response = new DeleteResponseContract { Success = true };
+        var response = new DeleteResponseContract { Success = true };
+
+        await SendAsync(response, (int)HttpStatusCode.NoContent, ct);
     }
 }
