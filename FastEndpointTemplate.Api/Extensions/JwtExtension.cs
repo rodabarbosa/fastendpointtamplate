@@ -8,7 +8,7 @@ namespace FastEndpointTemplate.Api.Extensions;
 
 public static class JwtExtension
 {
-// <summary>
+    /// <summary>
     /// Add JWT configuration to services
     /// </summary>
     /// <param name="services"></param>

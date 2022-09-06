@@ -2,20 +2,46 @@ using FastEndpointTemplate.Domain.Entities;
 
 namespace FastEndpointTemplate.Persistence.Seeds;
 
-public class WeatherForecastSeed
+static public class WeatherForecastSeed
 {
     private static readonly string[] _summaries = { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
 
     public static IEnumerable<WeatherForecast> GetSeeds()
     {
         var rnd = new Random();
-        return Enumerable.Range(1, 5).Select(_ => new WeatherForecast
+
+        var lista = new List<WeatherForecast>
         {
-            Id = Guid.NewGuid(),
-            Date = GetRandomDate(rnd),
-            TemperatureCelsius = rnd.Next(-20, 55),
-            Summary = _summaries[rnd.Next(_summaries.Length)]
-        });
+            new()
+            {
+                Id = Guid.Parse("10fd1392-3b4c-431a-b6dc-19cfba4ea269"), // Delete Test
+                Date = GetRandomDate(rnd),
+                TemperatureCelsius = rnd.Next(-20, 55),
+                Summary = _summaries[rnd.Next(_summaries.Length)]
+            },
+            new()
+            {
+                Id = Guid.Parse("43903282-c4b3-42f9-99cc-fd234ee6941d"), // Update Test
+                Date = GetRandomDate(rnd),
+                TemperatureCelsius = 30,
+                Summary = _summaries[rnd.Next(_summaries.Length)]
+            }
+        };
+
+        for (var i = 0; i < 5; i++)
+        {
+            var weather = new WeatherForecast
+            {
+                Id = Guid.NewGuid(),
+                Date = GetRandomDate(rnd),
+                TemperatureCelsius = rnd.Next(-20, 55),
+                Summary = _summaries[rnd.Next(_summaries.Length)]
+            };
+
+            lista.Add(weather);
+        }
+
+        return lista;
     }
 
     private static DateTime GetRandomDate(Random rnd)

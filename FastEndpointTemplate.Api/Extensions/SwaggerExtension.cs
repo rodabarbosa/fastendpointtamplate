@@ -8,7 +8,8 @@ public static class SwaggerExtension
     {
         services.AddSwaggerDoc(settings =>
         {
-            settings.Title = "FastEnpoint Template";
+            settings.Title = "FastEndpoint Template";
+            settings.Description = "FastEndpoint Template";
             settings.Version = "v1";
         });
     }

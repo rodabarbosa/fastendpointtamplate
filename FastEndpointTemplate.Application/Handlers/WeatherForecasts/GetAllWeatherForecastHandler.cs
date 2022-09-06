@@ -9,7 +9,6 @@ namespace FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 
 public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
 {
-    private const double Tolerance = 1e-6;
     private readonly IWeatherForecastRepository _weatherForecastRepository;
 
     public GetAllWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
@@ -17,7 +16,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task<IEnumerable<WeatherForecastContract>> Handle(string param)
+    public async Task<IEnumerable<WeatherForecastContract>?> Handle(string? param)
     {
         var weathers = _weatherForecastRepository.Get();
 
@@ -99,7 +98,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
         };
     }
 
-    private static OperationParam<double>? ExtractTemperatureCelsiusParam(string param)
+    private static OperationParam<decimal>? ExtractTemperatureCelsiusParam(string param)
     {
         return GetTemperature(param, "temperatureCelsius");
     }
@@ -122,12 +121,12 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
         };
     }
 
-    private static OperationParam<double>? ExtractTemperatureFahrenheitParam(string param)
+    private static OperationParam<decimal>? ExtractTemperatureFahrenheitParam(string param)
     {
         return GetTemperature(param, "temperatureFahrenheit");
     }
 
-    private static OperationParam<double>? GetTemperature(string param, string key)
+    private static OperationParam<decimal>? GetTemperature(string param, string key)
     {
         var lowercaseKey = key.ToLower();
         if (string.IsNullOrEmpty(param) || !param.ToLower().Contains($"{lowercaseKey}="))
@@ -143,9 +142,9 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
             var operationParam = CleanParam(data[1]).Split(',');
             var operation = operationParam[0].ToOperation();
 
-            double.TryParse(operationParam[1], out var value);
+            decimal.TryParse(operationParam[1], out var value);
 
-            return new OperationParam<double>
+            return new OperationParam<decimal>
             {
                 Value = value,
                 Operation = operation

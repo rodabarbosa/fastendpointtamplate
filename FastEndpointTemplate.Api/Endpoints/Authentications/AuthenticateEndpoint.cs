@@ -19,7 +19,7 @@ public class AuthenticateEndpoint : Endpoint<AuthenticationRequestContract, Auth
 
     public override async Task HandleAsync(AuthenticationRequestContract req, CancellationToken ct)
     {
-        var authentication = await _authenticationHandler.Handle(req.Authentication);
+        var authentication = await _authenticationHandler.Handle(req.Authentication!);
 
         await SendAsync(authentication, (int)HttpStatusCode.Created, ct);
     }

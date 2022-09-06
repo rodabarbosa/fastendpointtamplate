@@ -5,7 +5,7 @@ namespace FastEndpointTemplate.Application.Converters;
 
 public static class WeatherForecastConverter
 {
-    public static WeatherForecast ToWeatherForecast(this WeatherForecastContract contract)
+    public static WeatherForecast? ToWeatherForecast(this WeatherForecastContract? contract)
     {
         if (contract is null)
             return default;
@@ -19,7 +19,7 @@ public static class WeatherForecastConverter
         };
     }
 
-    public static WeatherForecastContract ToWeatherForecastContract(this WeatherForecast entity)
+    public static WeatherForecastContract? ToWeatherForecastContract(this WeatherForecast? entity)
     {
         if (entity is null)
             return default;

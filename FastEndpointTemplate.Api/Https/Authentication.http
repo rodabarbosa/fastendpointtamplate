@@ -1,0 +1,8 @@
+﻿POST https://localhost:7055/authenticate
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "admin@123"
+}

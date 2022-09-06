@@ -1,5 +1,6 @@
-using System.Linq.Expressions;
 using FastEndpointTemplate.Persistence.Contexts;
+using FastEndpointTemplate.Shared.Exceptions;
+using System.Linq.Expressions;
 
 namespace FastEndpointTemplate.Persistence.Repositories;
 
@@ -12,12 +13,12 @@ public abstract class BaseRepository<T> where T : class
         Context = context;
     }
 
-    public IQueryable<T> Get()
+    public virtual IQueryable<T> Get()
     {
         return Get(null);
     }
 
-    public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
+    public virtual IQueryable<T> Get(Expression<Func<T, bool>> predicate)
     {
         if (predicate is null)
             return Context.Set<T>();
@@ -25,56 +26,69 @@ public abstract class BaseRepository<T> where T : class
         return Context.Set<T>().Where(predicate);
     }
 
-    public async Task<T?> GetByIdAsync(Guid id)
+    public virtual async Task<T?> GetByIdAsync(Guid id)
     {
         return await Context.Set<T>().FindAsync(id);
     }
 
-    public Task AddAsync(T entity)
+    public virtual Task AddAsync(T? entity)
     {
+        AddPersistenceException.ThrowIf(entity is null, "Entity cannot be null");
+
         Context.Set<T>().Add(entity);
+
         return Context.SaveChangesAsync();
     }
 
-    public Task AddRangeAsync(IEnumerable<T> entities)
+    public virtual Task AddRangeAsync(IEnumerable<T> entities)
     {
+        AddPersistenceException.ThrowIf(entities is null || entities.Any(), "Entities cannot be null");
+
         Context.Set<T>().AddRange(entities);
+
         return Context.SaveChangesAsync();
     }
 
-    public Task UpdateAsync(T entity)
+    public virtual Task UpdateAsync(T? entity)
     {
+        UpdatePersistenceException.ThrowIf(entity is null, "Entity cannot be null");
+
         Context.Set<T>().Update(entity);
+
         return Context.SaveChangesAsync();
     }
 
-    public Task UpdateRangeAsync(IEnumerable<T> entities)
+    public virtual Task UpdateRangeAsync(IEnumerable<T> entities)
     {
+        UpdatePersistenceException.ThrowIf(entities is null || entities.Any(), "Entities cannot be null");
+
         Context.Set<T>().UpdateRange(entities);
+
         return Context.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(T entity)
+    public virtual Task DeleteAsync(T entity)
     {
-        if (entity is null)
-            return Task.CompletedTask;
+        DeletePersistenceException.ThrowIf(entity is null, "Entity cannot be null");
 
         Context.Set<T>().Remove(entity);
+
         return Context.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid id)
+    public virtual Task DeleteAsync(Guid id)
     {
         var entity = Context.Set<T>().Find(id);
+
         return DeleteAsync(entity);
     }
 
-    public Task DeleteRangeAsync(IEnumerable<T> entities)
+    public virtual Task DeleteRangeAsync(IEnumerable<T> entities)
     {
-        if (entities is null || !entities.Any())
-            return Task.CompletedTask;
+        DeletePersistenceException.ThrowIf(entities is null || entities.Any(), "Entities cannot be null");
 
         Context.Set<T>().RemoveRange(entities);
+
         return Context.SaveChangesAsync();
     }
 }

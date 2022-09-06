@@ -17,6 +17,8 @@ public class UpdateWeatherForecastHandler : IUpdateWeatherForecastHandler
 
     public async Task<WeatherForecastContract> Handle(Guid id, WeatherForecastContract contract)
     {
+        BadRequestException.ThrowIf(id != contract.Id, "The id in the route must match the id in the body");
+
         var weather = await GetWeatherAsync(id);
 
         await UpdateWeatherForecast(contract, weather);

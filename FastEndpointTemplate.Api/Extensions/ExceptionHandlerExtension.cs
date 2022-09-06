@@ -28,7 +28,7 @@ public static class ExceptionHandlerExtension
                     });
                 }
 
-                var error = GetErrorMessage(exHandlerFeature.Error);
+                var error = GetErrorMessage(exHandlerFeature?.Error);
 
                 ctx.Response.StatusCode = error.Code;
                 await ctx.Response.WriteAsJsonAsync(error);
@@ -36,32 +36,68 @@ public static class ExceptionHandlerExtension
         });
     }
 
-    private static ErrorContract GetErrorMessage(Exception exception)
+    private static ErrorContract GetErrorMessage(Exception? exception)
     {
-        if (exception is NotFoundException)
+        if (exception is null)
             return new ErrorContract
+            {
+                Code = (int)HttpStatusCode.BadRequest,
+                Error = "Ops! Something went wrong.",
+                Exception = default,
+                StackTrace = default
+            };
+
+        return exception switch
+        {
+            NotFoundException => new ErrorContract
             {
                 Code = (int)HttpStatusCode.NotFound,
                 Error = exception.Message,
                 Exception = nameof(NotFoundException),
                 StackTrace = exception.StackTrace
-            };
-
-        if (exception is BadRequestException)
-            return new ErrorContract
+            },
+            BadRequestException => new ErrorContract
             {
                 Code = (int)HttpStatusCode.BadRequest,
                 Error = exception.Message,
                 Exception = nameof(BadRequestException),
                 StackTrace = exception.StackTrace
-            };
-
-        return new ErrorContract
-        {
-            Code = (int)HttpStatusCode.BadRequest,
-            Error = "Ops! Something went wrong.",
-            Exception = exception.GetType().Name,
-            StackTrace = exception.StackTrace
+            },
+            PersistenceException => new ErrorContract
+            {
+                Code = (int)HttpStatusCode.BadRequest,
+                Error = exception.Message,
+                Exception = nameof(BadRequestException),
+                StackTrace = exception.StackTrace
+            },
+            AddPersistenceException => new ErrorContract
+            {
+                Code = (int)HttpStatusCode.BadRequest,
+                Error = exception.Message,
+                Exception = nameof(BadRequestException),
+                StackTrace = exception.StackTrace
+            },
+            DeletePersistenceException => new ErrorContract
+            {
+                Code = (int)HttpStatusCode.BadRequest,
+                Error = exception.Message,
+                Exception = nameof(BadRequestException),
+                StackTrace = exception.StackTrace
+            },
+            UpdatePersistenceException => new ErrorContract
+            {
+                Code = (int)HttpStatusCode.BadRequest,
+                Error = exception.Message,
+                Exception = nameof(BadRequestException),
+                StackTrace = exception.StackTrace
+            },
+            _ => new ErrorContract
+            {
+                Code = (int)HttpStatusCode.BadRequest,
+                Error = "Ops! Something went wrong.",
+                Exception = exception.GetType().Name,
+                StackTrace = exception.StackTrace
+            }
         };
     }
 }

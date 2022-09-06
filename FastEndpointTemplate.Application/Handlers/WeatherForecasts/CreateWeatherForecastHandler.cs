@@ -13,12 +13,12 @@ public class CreateWeatherForecastHandler : ICreateWeatherForecastHandler
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task<WeatherForecastContract> Handle(WeatherForecastContract contract)
+    public async Task<WeatherForecastContract?> Handle(WeatherForecastContract contract)
     {
         var weather = contract.ToWeatherForecast();
 
         await _weatherForecastRepository.AddAsync(weather);
 
-        return weather.ToWeatherForecastContract();
+        return weather?.ToWeatherForecastContract();
     }
 }

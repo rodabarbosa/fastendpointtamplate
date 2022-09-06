@@ -11,7 +11,6 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     {
     }
 
-
     public Task<bool> IsUserValidAsync(string username, string password)
     {
         return Context.Users.AnyAsync(x => x.Username == username && x.Password == password);

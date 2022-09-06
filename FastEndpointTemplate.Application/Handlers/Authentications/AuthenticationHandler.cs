@@ -56,7 +56,6 @@ public class AuthenticationHandler : IAuthenticationHandler
 
         return new AuthenticationResponseContract
         {
-            Authenticated = true,
             Expires = expiresDate,
             Token = token,
             Username = username,

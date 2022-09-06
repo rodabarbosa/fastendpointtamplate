@@ -6,11 +6,11 @@ namespace FastEndpointTemplate.Shared.Models;
 public sealed class TokenConfiguration : ITokenConfiguration
 {
     /// <inheritdoc />
-    public string Audience { get; set; }
+    public string Audience { get; set; } = "FastEndpointTemplateAudience";
 
     /// <inheritdoc />
-    public string Issuer { get; set; }
+    public string Issuer { get; set; } = "FastEndpointTemplateIssuer";
 
     /// <inheritdoc />
-    public int Seconds { get; set; }
+    public int Seconds { get; set; } = 60;
 }

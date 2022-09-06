@@ -11,10 +11,10 @@ public class AuthenticationRequestValidator : Validator<AuthenticationRequestCon
             .NotNull()
             .NotEqual(new AuthenticationContract());
 
-        RuleFor(x => x.Authentication.Username)
+        RuleFor(x => x.Authentication!.Username)
             .NotEmpty();
 
-        RuleFor(x => x.Authentication.Password)
+        RuleFor(x => x.Authentication!.Password)
             .NotEmpty();
     }
 }

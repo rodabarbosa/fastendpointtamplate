@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FastEndpointTemplate.Persistence.Contexts;
 
-public class ApplicationContext : DbContext
+public sealed class ApplicationContext : DbContext
 {
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {

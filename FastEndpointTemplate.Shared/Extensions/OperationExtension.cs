@@ -8,7 +8,7 @@ namespace FastEndpointTemplate.Shared.Extensions;
 public static class OperationExtension
 {
     /// <summary>
-    /// Convert strikng to Operation enum
+    /// Convert string to Operation enum
     /// </summary>
     /// <param name="value"></param>
     /// <returns></returns>

@@ -15,12 +15,12 @@ public class UpdateWeatherForecastRequestValidator : Validator<UpdateWeatherFore
             .NotNull()
             .NotEqual(new WeatherForecastContract());
 
-        RuleFor(x => x.WeatherForecast.Date)
+        RuleFor(x => x.WeatherForecast!.Date)
             .NotEmpty()
             .GreaterThan(DateTime.MinValue)
             .LessThanOrEqualTo(DateTime.Now);
 
-        RuleFor(x => x.WeatherForecast.TemperatureCelsius)
+        RuleFor(x => x.WeatherForecast!.TemperatureCelsius)
             .NotNull()
             .GreaterThanOrEqualTo(-5000)
             .LessThanOrEqualTo(5000);
