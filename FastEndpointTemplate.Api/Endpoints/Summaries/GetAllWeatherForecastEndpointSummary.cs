@@ -24,9 +24,6 @@ public class GetAllWeatherForecastEndpointSummary : Summary<GetAllWeatherForecas
         LessThanOrEqual";
         Response<List<WeatherForecastContract>>(200, "Query result for weather forecast registered.");
         Response<ErrorContract>(400, "Bad request.");
-        // Response<ErrorContract>(401, "Unauthorized.");
-        // Response<ErrorContract>(403, "Forbidden.");
-        // Response<ErrorContract>(404, "Not found.");
         Response<ErrorContract>(500, "Internal server error.");
     }
 }

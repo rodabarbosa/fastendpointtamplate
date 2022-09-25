@@ -1,9 +1,9 @@
 namespace FastEndpointTemplate.Domain.Entities;
 
-public class WeatherForecast
+public sealed class WeatherForecast
 {
-    public Guid Id { get; set; }
-    public DateTime Date { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public DateTime Date { get; set; } = DateTime.Now;
     public decimal TemperatureCelsius { get; set; }
     public string? Summary { get; set; }
 }

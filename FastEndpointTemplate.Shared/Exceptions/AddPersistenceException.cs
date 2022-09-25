@@ -4,11 +4,11 @@ public class AddPersistenceException : Exception
 {
     private const string DefaultMessage = "Error while adding data.";
 
-    public AddPersistenceException()
+    public AddPersistenceException() : this(DefaultMessage)
     {
     }
 
-    public AddPersistenceException(string message) : this(message, default)
+    public AddPersistenceException(string? message) : this(message, default)
     {
     }
 
@@ -16,7 +16,7 @@ public class AddPersistenceException : Exception
     {
     }
 
-    public AddPersistenceException(string message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
+    public AddPersistenceException(string? message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
     {
     }
 

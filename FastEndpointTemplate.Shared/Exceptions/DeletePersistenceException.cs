@@ -8,7 +8,7 @@ public class DeletePersistenceException : Exception
     {
     }
 
-    public DeletePersistenceException(string message) : this(message, default)
+    public DeletePersistenceException(string? message) : this(message, default)
     {
     }
 
@@ -16,7 +16,7 @@ public class DeletePersistenceException : Exception
     {
     }
 
-    public DeletePersistenceException(string message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
+    public DeletePersistenceException(string? message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
     {
     }
 
