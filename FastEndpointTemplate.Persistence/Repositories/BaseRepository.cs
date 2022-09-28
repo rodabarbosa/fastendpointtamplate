@@ -42,7 +42,7 @@ public abstract class BaseRepository<T> where T : class
 
     public virtual Task AddRangeAsync(IEnumerable<T> entities)
     {
-        AddPersistenceException.ThrowIf(entities is null || entities.Any(), "Entities cannot be null");
+        AddPersistenceException.ThrowIf(entities is null || !entities.Any(), "Entities cannot be null");
 
         Context.Set<T>().AddRange(entities);
 
@@ -60,7 +60,7 @@ public abstract class BaseRepository<T> where T : class
 
     public virtual Task UpdateRangeAsync(IEnumerable<T> entities)
     {
-        UpdatePersistenceException.ThrowIf(entities is null || entities.Any(), "Entities cannot be null");
+        UpdatePersistenceException.ThrowIf(entities is null || !entities.Any(), "Entities cannot be null");
 
         Context.Set<T>().UpdateRange(entities);
 
@@ -85,7 +85,7 @@ public abstract class BaseRepository<T> where T : class
 
     public virtual Task DeleteRangeAsync(IEnumerable<T> entities)
     {
-        DeletePersistenceException.ThrowIf(entities is null || entities.Any(), "Entities cannot be null");
+        DeletePersistenceException.ThrowIf(entities is null || !entities.Any(), "Entities cannot be null");
 
         Context.Set<T>().RemoveRange(entities);
 
