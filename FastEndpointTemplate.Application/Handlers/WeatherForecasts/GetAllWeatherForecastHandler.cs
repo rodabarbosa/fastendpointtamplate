@@ -39,10 +39,8 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
     private static IQueryable<WeatherForecast> FilterByDate(IQueryable<WeatherForecast> weathers, string param)
     {
         var filter = ExtractDateParam(param);
-        if (filter is null)
-            return weathers;
 
-        return filter.Operation switch
+        return filter?.Operation switch
         {
             Operation.GreaterThan => weathers.Where(w => w.Date > filter.Value),
             Operation.LessThan => weathers.Where(w => w.Date < filter.Value),
@@ -56,7 +54,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
 
     private static OperationParam<DateTime>? ExtractDateParam(string param)
     {
-        if (string.IsNullOrEmpty(param) || !param.ToLower().Contains("date="))
+        if (string.IsNullOrEmpty(param))
             return default;
 
         var values = param.Split('&');
@@ -83,10 +81,8 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
     private static IQueryable<WeatherForecast> FilterByTemperatureCelsius(IQueryable<WeatherForecast> weathers, string param)
     {
         var filter = ExtractTemperatureCelsiusParam(param);
-        if (filter is null)
-            return weathers;
 
-        return filter.Operation switch
+        return filter?.Operation switch
         {
             Operation.GreaterThan => weathers.Where(w => w.TemperatureCelsius > filter.Value),
             Operation.LessThan => weathers.Where(w => w.TemperatureCelsius < filter.Value),
@@ -106,10 +102,8 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
     private static IQueryable<WeatherForecast> FilterByTemperatureFahrenheit(IQueryable<WeatherForecast> weathers, string param)
     {
         var filter = ExtractTemperatureFahrenheitParam(param);
-        if (filter == null)
-            return weathers;
 
-        return filter.Operation switch
+        return filter?.Operation switch
         {
             Operation.GreaterThan => weathers.Where(w => w.TemperatureCelsius.ToFahrenheit() > filter.Value),
             Operation.LessThan => weathers.Where(w => w.TemperatureCelsius.ToFahrenheit() < filter.Value),
@@ -129,7 +123,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
     private static OperationParam<decimal>? GetTemperature(string param, string key)
     {
         var lowercaseKey = key.ToLower();
-        if (string.IsNullOrEmpty(param) || !param.ToLower().Contains($"{lowercaseKey}="))
+        if (string.IsNullOrEmpty(param))
             return default;
 
         var values = param.Split('&');

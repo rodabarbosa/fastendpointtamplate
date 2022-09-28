@@ -1,0 +1,10 @@
+global using Xunit;
+global using FastEndpointTemplate.Application.Converters;
+global using FastEndpointTemplate.Shared.Contracts;
+global using FastEndpointTemplate.Domain.Entities;
+global using FastEndpointTemplate.Persistence.Contexts;
+global using FastEndpointTemplate.Application.Test.Utils;
+global using FastEndpointTemplate.Application.Handlers.WeatherForecasts;
+global using FastEndpointTemplate.Application.Handlers.Authentications;
+global using FastEndpointTemplate.Persistence.Repositories;
+global using FastEndpointTemplate.Shared.Models;

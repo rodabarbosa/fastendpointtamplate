@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastEndpointTemplate.Shared
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastEndpointTemplate.Domain.Test", "FastEndpointTemplate.Domain.Test\FastEndpointTemplate.Domain.Test.csproj", "{D73EC8E9-9D7D-4057-AB47-4B5FAC699321}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastEndpointTemplate.Application.Test", "FastEndpointTemplate.Application.Test\FastEndpointTemplate.Application.Test.csproj", "{2696EFBC-47D8-4984-9ED6-B817581CAFB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{D73EC8E9-9D7D-4057-AB47-4B5FAC699321}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D73EC8E9-9D7D-4057-AB47-4B5FAC699321}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D73EC8E9-9D7D-4057-AB47-4B5FAC699321}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2696EFBC-47D8-4984-9ED6-B817581CAFB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2696EFBC-47D8-4984-9ED6-B817581CAFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2696EFBC-47D8-4984-9ED6-B817581CAFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2696EFBC-47D8-4984-9ED6-B817581CAFB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{58158C17-95B5-4AB1-AA5E-3041D05ACB2C} = {08044C13-9650-409F-A8CA-A3402D22D92C}
@@ -65,5 +71,6 @@ Global
 		{D4A24915-F4F3-460F-8615-56F2241D80F5} = {7A04B9B0-22A7-4959-AED8-B09E305A5F68}
 		{F94D8C8C-724F-4A7B-B26D-BA7545E557BD} = {731AA086-4BAE-4276-B18A-029B4B9E5A33}
 		{D73EC8E9-9D7D-4057-AB47-4B5FAC699321} = {731AA086-4BAE-4276-B18A-029B4B9E5A33}
+		{2696EFBC-47D8-4984-9ED6-B817581CAFB9} = {731AA086-4BAE-4276-B18A-029B4B9E5A33}
 	EndGlobalSection
 EndGlobal
