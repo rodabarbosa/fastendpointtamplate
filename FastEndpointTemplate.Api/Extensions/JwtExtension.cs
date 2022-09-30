@@ -16,7 +16,7 @@ public static class JwtExtension
     public static void AddJwtService(this IServiceCollection services, IConfiguration configuration)
     {
         var signingConfigurations = new SigningConfiguration();
-        services.AddSingleton(typeof(ISigningConfiguration), signingConfigurations);
+        services.AddSingleton<ISigningConfiguration>(signingConfigurations);
 
         var tokenConfigurations = new TokenConfiguration();
         new ConfigureFromConfigurationOptions<TokenConfiguration>(configuration.GetSection("TokenConfiguration"))
