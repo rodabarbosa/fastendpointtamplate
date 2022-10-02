@@ -4,5 +4,5 @@ namespace FastEndpointTemplate.Application.Handlers;
 
 public interface IGetWeatherForecastHandler
 {
-    Task<WeatherForecastContract> Handle(Guid id);
+    Task<WeatherForecastContract> HandleAsync(Guid id);
 }

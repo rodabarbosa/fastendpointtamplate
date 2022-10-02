@@ -22,7 +22,7 @@ public class CreateWeatherForecastEndpoint : Endpoint<CreateWeatherForecastReque
     {
         BadRequestException.ThrowIf(req.WeatherForecast is null, "WeatherForecast was not informed");
 
-        var response = await _handler.Handle(req.WeatherForecast!);
+        var response = await _handler.HandleAsync(req.WeatherForecast!);
 
         await SendAsync(response, (int)HttpStatusCode.Created, ct);
     }

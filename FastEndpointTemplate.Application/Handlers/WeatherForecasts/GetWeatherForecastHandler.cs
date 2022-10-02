@@ -12,7 +12,7 @@ public class GetWeatherForecastHandler : IGetWeatherForecastHandler
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task<WeatherForecastContract?> Handle(Guid id)
+    public async Task<WeatherForecastContract?> HandleAsync(Guid id)
     {
         var result = await _weatherForecastRepository.GetByIdAsync(id);
 

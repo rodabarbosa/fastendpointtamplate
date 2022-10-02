@@ -12,7 +12,7 @@ public class DeleteWeatherForecastHandler : IDeleteWeatherForecastHandler
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task Handle(Guid id)
+    public async Task HandleAsync(Guid id)
     {
         var weather = await _weatherForecastRepository.GetByIdAsync(id);
 

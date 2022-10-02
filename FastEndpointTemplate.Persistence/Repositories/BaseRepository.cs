@@ -20,10 +20,7 @@ public abstract class BaseRepository<T> where T : class
 
     public virtual IQueryable<T> Get(Expression<Func<T, bool>> predicate)
     {
-        if (predicate is null)
-            return Context.Set<T>();
-
-        return Context.Set<T>().Where(predicate);
+        return predicate is null ? Context.Set<T>() : Context.Set<T>().Where(predicate);
     }
 
     public virtual async Task<T?> GetByIdAsync(Guid id)

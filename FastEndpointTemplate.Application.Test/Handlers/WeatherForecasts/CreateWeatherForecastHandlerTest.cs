@@ -19,7 +19,7 @@ public class CreateWeatherForecastHandlerTest
             Summary = "Freezing"
         };
 
-        var response = await handler.Handle(request);
+        var response = await handler.HandleAsync(request);
         Assert.NotNull(response);
     }
 }

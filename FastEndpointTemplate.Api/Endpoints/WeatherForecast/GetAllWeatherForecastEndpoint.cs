@@ -18,7 +18,7 @@ public class GetAllWeatherForecastEndpoint : Endpoint<GetAllWeatherForecastReque
 
     public override async Task HandleAsync(GetAllWeatherForecastRequestContract requestContract, CancellationToken ct)
     {
-        var response = await _getAllWeatherForecastHandler.Handle(requestContract.Params!);
+        var response = await _getAllWeatherForecastHandler.HandleAsync(requestContract.Params!);
 
         Response = response.ToList();
     }

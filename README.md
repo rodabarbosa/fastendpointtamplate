@@ -18,3 +18,5 @@ Check out the [exception filter](https://docs.microsoft.com/en-us/aspnet/core/we
 ## Consideration
 
 This project was created using swagger as the API specification and documentation. For this reason always specify the type of the response, if not it loses its meaning.
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=rodabarbosa_fastendpointtamplate&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=rodabarbosa_fastendpointtamplate)

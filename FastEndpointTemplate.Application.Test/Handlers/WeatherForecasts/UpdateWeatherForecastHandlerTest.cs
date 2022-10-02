@@ -21,7 +21,7 @@ public class UpdateWeatherForecastHandlerTest
             TemperatureFahrenheit = 32
         };
 
-        await handler.Handle(guid, request);
+        await handler.HandleAsync(guid, request);
         Assert.True(true);
     }
 }

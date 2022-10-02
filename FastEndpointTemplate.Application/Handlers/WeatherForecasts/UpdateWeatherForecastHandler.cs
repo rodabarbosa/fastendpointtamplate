@@ -15,7 +15,7 @@ public class UpdateWeatherForecastHandler : IUpdateWeatherForecastHandler
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task<WeatherForecastContract> Handle(Guid id, WeatherForecastContract contract)
+    public async Task<WeatherForecastContract> HandleAsync(Guid id, WeatherForecastContract contract)
     {
         BadRequestException.ThrowIf(id != contract.Id, "The id in the route must match the id in the body");
 
@@ -23,7 +23,7 @@ public class UpdateWeatherForecastHandler : IUpdateWeatherForecastHandler
 
         await UpdateWeatherForecast(contract, weather);
 
-        return weather.ToWeatherForecastContract();
+        return weather!.ToWeatherForecastContract()!;
     }
 
     private async Task<WeatherForecast> GetWeatherAsync(Guid id)

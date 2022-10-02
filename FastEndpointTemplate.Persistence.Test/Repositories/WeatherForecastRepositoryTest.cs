@@ -30,7 +30,7 @@ public class WeatherForecastRepositoryTest
     [Fact]
     public async Task GetByIdASync()
     {
-        var guid = Guid.Parse("10fd1392-3b4c-431a-b6dc-19cfba4ea269");
+        var guid = Guid.Parse("43903282-c4b3-42f9-99cc-fd234ee6941d");
         var result = await _repository.GetByIdAsync(guid);
 
         Assert.NotNull(result);
@@ -65,7 +65,7 @@ public class WeatherForecastRepositoryTest
     [Fact]
     public async Task UpdateAsync()
     {
-        var guid = Guid.Parse("10fd1392-3b4c-431a-b6dc-19cfba4ea269");
+        var guid = Guid.Parse("43903282-c4b3-42f9-99cc-fd234ee6941d");
         var weather = await _repository.GetByIdAsync(guid);
 
         weather.TemperatureCelsius = 36;
@@ -113,9 +113,10 @@ public class WeatherForecastRepositoryTest
     [Fact]
     public async Task DeleteRangeAsync()
     {
+        var guid = Guid.Parse("e3977d67-d913-4e1e-bb5b-ef36deafc796");
         var context = ContextUtil.GetContext();
         var repository = new WeatherForecastRepository(context);
-        var weathers = repository.Get().Take(2).ToList();
+        var weathers = repository.Get(x => x.Id == guid).ToList();
 
         await repository.DeleteRangeAsync(weathers);
 

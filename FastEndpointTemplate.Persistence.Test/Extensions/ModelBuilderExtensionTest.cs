@@ -7,5 +7,7 @@ public class ModelBuilderExtensionTest
     {
         var modelBuilder = new ModelBuilder();
         modelBuilder.SetSeeds();
+
+        Assert.True(true);
     }
 }

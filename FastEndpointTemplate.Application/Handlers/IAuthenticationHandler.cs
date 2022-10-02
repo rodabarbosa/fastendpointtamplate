@@ -4,5 +4,5 @@ namespace FastEndpointTemplate.Application.Handlers;
 
 public interface IAuthenticationHandler
 {
-    Task<AuthenticationResponseContract> Handle(AuthenticationContract contract);
+    Task<AuthenticationResponseContract> HandleAsync(AuthenticationContract contract);
 }

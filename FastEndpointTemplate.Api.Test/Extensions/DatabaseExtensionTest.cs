@@ -11,6 +11,8 @@ public class DatabaseExtensionTest
         var serviceCollection = builder.Services;
 
         serviceCollection.AddDatabase("test");
+
+        Assert.True(true);
     }
 
     [Fact]
@@ -23,6 +25,8 @@ public class DatabaseExtensionTest
 
         var app = builder.Build();
 
-        ((IApplicationBuilder)app).ApplicationServices.GetRequiredService<ApplicationContext>();
+        var context = ((IApplicationBuilder)app).ApplicationServices.GetRequiredService<ApplicationContext>();
+
+        Assert.NotNull(context);
     }
 }

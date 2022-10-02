@@ -19,7 +19,7 @@ public class DeleteWeatherForecastEndpoint : Endpoint<DeleteWeatherForecastReque
 
     public override async Task HandleAsync(DeleteWeatherForecastRequestContract req, CancellationToken ct)
     {
-        await _handler.Handle(req.Id ?? Guid.Empty);
+        await _handler.HandleAsync(req.Id ?? Guid.Empty);
 
         var response = new DeleteResponseContract { Success = true };
 

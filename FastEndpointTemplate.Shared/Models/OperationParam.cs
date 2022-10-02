@@ -11,10 +11,10 @@ public sealed class OperationParam<T>
     /// <summary>
     /// Defines operation type
     /// </summary>
-    public Operation Operation { get; set; }
+    public Operation Operation { get; set; } = default;
 
     /// <summary>
     /// Defines search value
     /// </summary>
-    public T Value { get; set; }
+    public T Value { get; set; } = default;
 }

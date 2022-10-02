@@ -24,15 +24,15 @@ public class AuthenticationHandler : IAuthenticationHandler
         _tokenConfiguration = tokenConfiguration;
     }
 
-    public async Task<AuthenticationResponseContract> Handle(AuthenticationContract contract)
+    public async Task<AuthenticationResponseContract> HandleAsync(AuthenticationContract contract)
     {
-        var validCredentials = await _userRepository.IsUserValidAsync(contract.Username, contract.Password);
+        var validCredentials = await _userRepository.IsUserValidAsync(contract.Username!, contract.Password!);
 
         BadRequestException.ThrowIf(!validCredentials, "Não foi possível autenticar o usuário");
 
         var identity = CreateIdentity();
 
-        return CreateAuthenticationResponse(identity, contract.Username);
+        return CreateAuthenticationResponse(identity, contract.Username!);
     }
 
     private static ClaimsIdentity CreateIdentity()

@@ -15,5 +15,7 @@ public class ExceptionHandlerExtensionTest
     public void ExceptionHandler_Test()
     {
         _app.UseCustomExceptionHandler();
+
+        Assert.True(true);
     }
 }

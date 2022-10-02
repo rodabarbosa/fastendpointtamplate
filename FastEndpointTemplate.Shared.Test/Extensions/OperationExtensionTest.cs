@@ -9,9 +9,9 @@ public class OperationExtensionTest
     [InlineData(3, "GreaterThanOrEqual")]
     [InlineData(4, "lessThan")]
     [InlineData(5, "lessThanOrEqual")]
-    [InlineData(6, "contains")]
-    [InlineData(7, "startswith")]
-    [InlineData(8, "Endswith")]
+    [InlineData(6, "Contains")]
+    [InlineData(7, "StartsWith")]
+    [InlineData(8, "EndsWith")]
     [InlineData(0, "Fail")]
     public void ToOperation_test(int value, string operationStr)
     {

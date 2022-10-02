@@ -18,5 +18,7 @@ public class JwtExtensionTest
     public void Test()
     {
         _serviceCollection.AddJwtService(_configuration);
+
+        Assert.True(true);
     }
 }

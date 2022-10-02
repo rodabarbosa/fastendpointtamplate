@@ -21,6 +21,13 @@ static public class WeatherForecastSeed
             },
             new()
             {
+                Id = Guid.Parse("e3977d67-d913-4e1e-bb5b-ef36deafc796"), // Delete Test
+                Date = GetRandomDate(rnd),
+                TemperatureCelsius = rnd.Next(-20, 55),
+                Summary = _summaries[rnd.Next(_summaries.Length)]
+            },
+            new()
+            {
                 Id = Guid.Parse("43903282-c4b3-42f9-99cc-fd234ee6941d"), // Update Test
                 Date = GetRandomDate(rnd),
                 TemperatureCelsius = 30,

@@ -8,7 +8,7 @@ namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
 [HttpGet("/weatherforecast/{id}")]
 [AllowAnonymous]
-public class GetWeatherForecastRequestEndpoint : Endpoint<GetWeatherForecastRequestContract, WeatherForecastContract>
+public class GetWeatherForecastRequestEndpoint : Endpoint<GetWeatherForecastRequestContract, WeatherForecastContract?>
 {
     private readonly IGetWeatherForecastHandler _getWeatherForecastHandler;
 
@@ -19,7 +19,7 @@ public class GetWeatherForecastRequestEndpoint : Endpoint<GetWeatherForecastRequ
 
     public override async Task HandleAsync(GetWeatherForecastRequestContract req, CancellationToken ct)
     {
-        var response = await _getWeatherForecastHandler.Handle(req.Id ?? Guid.Empty);
+        var response = await _getWeatherForecastHandler.HandleAsync(req.Id ?? Guid.Empty);
 
         NotFoundException.ThrowIf(response is null, $"weather forecast with id {req.Id} not found");
 
