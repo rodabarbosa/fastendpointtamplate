@@ -4,5 +4,5 @@ namespace FastEndpointTemplate.Application.Handlers;
 
 public interface IGetAllWeatherForecastHandler
 {
-    Task<IEnumerable<WeatherForecastContract>> HandleAsync(string? param);
+    Task<List<WeatherForecastContract>>? HandleAsync(string? param);
 }

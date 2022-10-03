@@ -4,6 +4,7 @@ using FastEndpointTemplate.Shared.Contracts;
 using FastEndpointTemplate.Shared.Enumerators;
 using FastEndpointTemplate.Shared.Extensions;
 using FastEndpointTemplate.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 
@@ -16,7 +17,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task<IEnumerable<WeatherForecastContract>?> HandleAsync(string? param)
+    public Task<List<WeatherForecastContract>>? HandleAsync(string? param)
     {
         var weathers = _weatherForecastRepository.Get();
 
@@ -33,7 +34,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
                 TemperatureCelsius = x.TemperatureCelsius,
                 Summary = x.Summary
             })
-            .ToList();
+            .ToListAsync();
     }
 
     private static IQueryable<WeatherForecast>? FilterByDate(IQueryable<WeatherForecast>? weathers, string param)
