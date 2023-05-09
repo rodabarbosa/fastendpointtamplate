@@ -39,14 +39,14 @@ app.UseFastEndpoints(c =>
         WriteIndented = false
     };
 
-    c.RequestDeserializer = async (httpRequest, type, jCtx, ct) =>
+    c.Serializer.RequestDeserializer = async (httpRequest, type, jCtx, ct) =>
     {
         using var reader = new StreamReader(httpRequest.Body);
         var bodyRequest = await reader.ReadToEndAsync();
         return JsonSerializer.Deserialize(bodyRequest, type, serializerOptions);
     };
 
-    c.ResponseSerializer = (httpResponse, response, contentType, jCtx, ct) =>
+    c.Serializer.ResponseSerializer = (httpResponse, response, contentType, jCtx, ct) =>
     {
         httpResponse.ContentType = contentType;
         var responseText = JsonSerializer.Serialize(response, serializerOptions);
@@ -54,7 +54,7 @@ app.UseFastEndpoints(c =>
     };
 
     // Handles Validation errors
-    c.ErrorResponseBuilder = (failures, status) =>
+    c.Errors.ResponseBuilder = (failures, ctx, status) =>
     {
         var errorMessages = new Dictionary<string, string>();
         foreach (var failure in failures) errorMessages.Add(failure.PropertyName, failure.ErrorMessage);
