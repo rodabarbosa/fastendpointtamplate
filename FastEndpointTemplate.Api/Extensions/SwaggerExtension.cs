@@ -1,20 +1,24 @@
 ﻿using FastEndpoints.Swagger;
+using FastEndpointTemplate.Api.Models;
 
 namespace FastEndpointTemplate.Api.Extensions;
 
-public static class SwaggerExtension
+static public class SwaggerExtension
 {
-    public static void AddSwagger(this IServiceCollection services)
+    static public void AddSwagger(this IServiceCollection services, ApiInfo info)
     {
-        services.AddSwaggerDoc(settings =>
+        services.SwaggerDocument(options =>
         {
-            settings.Title = "FastEndpoint Template";
-            settings.Description = "FastEndpoint Template";
-            settings.Version = "v1";
+            options.DocumentSettings = settings =>
+            {
+                settings.Title = info?.Title;
+                settings.Description = info?.Description;
+                settings.Version = info?.Version;
+            };
         });
     }
 
-    public static void UseSwaggerDoc(this IApplicationBuilder app)
+    static public void UseSwaggerDoc(this IApplicationBuilder app)
     {
         app.UseOpenApi();
         app.UseSwaggerUi3(s => s.ConfigureDefaults());

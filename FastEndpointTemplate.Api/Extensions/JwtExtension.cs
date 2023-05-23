@@ -2,25 +2,21 @@
 using FastEndpointTemplate.Shared.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 
 namespace FastEndpointTemplate.Api.Extensions;
 
-public static class JwtExtension
+static public class JwtExtension
 {
     /// <summary>
     /// Add JWT configuration to services
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
-    public static void AddJwtService(this IServiceCollection services, IConfiguration configuration)
+    static public void AddJwtService(this IServiceCollection services, TokenConfiguration tokenConfigurations)
     {
         var signingConfigurations = new SigningConfiguration();
         services.AddSingleton<ISigningConfiguration>(signingConfigurations);
 
-        var tokenConfigurations = new TokenConfiguration();
-        new ConfigureFromConfigurationOptions<TokenConfiguration>(configuration.GetSection("TokenConfiguration"))
-            .Configure(tokenConfigurations);
         services.AddSingleton(typeof(ITokenConfiguration), tokenConfigurations);
 
         services.AddAuthentication(options =>

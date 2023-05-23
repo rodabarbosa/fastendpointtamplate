@@ -1,7 +1,10 @@
 global using FluentValidation;
 using FastEndpoints;
 using FastEndpointTemplate.Api.Extensions;
+using FastEndpointTemplate.Api.Models;
 using FastEndpointTemplate.Shared.Contracts;
+using FastEndpointTemplate.Shared.Models;
+using Microsoft.Extensions.Options;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -11,13 +14,22 @@ builder.Services.AddResponseCompression();
 
 var configuration = builder.Configuration;
 
-builder.Services.AddJwtService(configuration);
+var tokenConfigurations = new TokenConfiguration();
+new ConfigureFromConfigurationOptions<TokenConfiguration>(configuration.GetSection("TokenConfiguration"))
+    .Configure(tokenConfigurations);
+
+builder.Services.AddJwtService(tokenConfigurations);
 
 builder.Services.AddDatabase("Template");
 
 builder.Services.AddAuthorization();
 builder.Services.AddFastEndpoints();
-builder.Services.AddSwagger();
+
+var apiInfo = new ApiInfo();
+new ConfigureFromConfigurationOptions<ApiInfo>(configuration.GetSection("ApiInfo"))
+    .Configure(apiInfo);
+
+builder.Services.AddSwagger(apiInfo);
 
 var app = builder.Build();
 
