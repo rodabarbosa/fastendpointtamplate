@@ -10,9 +10,7 @@ public class NotFoundExceptionTest
     public void ThrowException_Param(string? message, bool throws)
     {
         if (throws)
-        {
             Assert.Throws<NotFoundException>(() => NotFoundException.ThrowIf(throws, message));
-        }
         else
         {
             NotFoundException.ThrowIf(throws, message);

@@ -7,19 +7,13 @@ namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
 [HttpGet("/weatherforecast")]
 [AllowAnonymous]
-public class GetAllWeatherForecastEndpoint : Endpoint<GetAllWeatherForecastRequestContract, List<WeatherForecastContract>>
+public sealed class GetAllWeatherForecastEndpoint(IGetAllWeatherForecastHandler getAllWeatherForecastHandler)
+    : Endpoint<GetAllWeatherForecastRequestContract, List<WeatherForecastContract>>
 {
-    private readonly IGetAllWeatherForecastHandler _getAllWeatherForecastHandler;
-
-    public GetAllWeatherForecastEndpoint(IGetAllWeatherForecastHandler getAllWeatherForecastHandler)
-    {
-        _getAllWeatherForecastHandler = getAllWeatherForecastHandler;
-    }
-
     async public override Task HandleAsync(GetAllWeatherForecastRequestContract requestContract, CancellationToken ct)
     {
-        var response = await _getAllWeatherForecastHandler.HandleAsync(requestContract.Params!);
+        var response = await getAllWeatherForecastHandler.HandleAsync(requestContract.Params!, ct);
 
-        Response = response.ToList();
+        Response = response;
     }
 }

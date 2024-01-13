@@ -26,12 +26,10 @@ public class AuthenticationHandlerTest
 
         if (expected)
         {
-            var result = await handler.HandleAsync(contract);
+            var result = await handler.HandleAsync(contract, CancellationToken.None);
             Assert.NotNull(result);
         }
         else
-        {
-            await Assert.ThrowsAsync<BadRequestException>(() => handler.HandleAsync(contract));
-        }
+            await Assert.ThrowsAsync<BadRequestException>(() => handler.HandleAsync(contract, CancellationToken.None));
     }
 }

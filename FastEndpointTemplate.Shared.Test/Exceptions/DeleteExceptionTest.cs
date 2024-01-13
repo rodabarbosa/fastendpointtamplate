@@ -10,9 +10,7 @@ public class DeleteExceptionTest
     public void ThrowException_Param(string? message, bool throws)
     {
         if (throws)
-        {
             Assert.Throws<DeletePersistenceException>(() => DeletePersistenceException.ThrowIf(throws, message));
-        }
         else
         {
             DeletePersistenceException.ThrowIf(throws, message);

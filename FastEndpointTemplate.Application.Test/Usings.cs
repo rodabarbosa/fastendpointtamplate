@@ -8,3 +8,4 @@ global using FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 global using FastEndpointTemplate.Application.Handlers.Authentications;
 global using FastEndpointTemplate.Persistence.Repositories;
 global using FastEndpointTemplate.Shared.Models;
+global using FluentAssertions;

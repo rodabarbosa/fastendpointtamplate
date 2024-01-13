@@ -12,7 +12,7 @@ public class DeleteWeatherForecastHandlerTest
 
         var guid = Guid.Parse("10fd1392-3b4c-431a-b6dc-19cfba4ea269");
 
-        await handler.HandleAsync(guid);
+        await handler.HandleAsync(guid, CancellationToken.None);
         Assert.True(true);
     }
 }

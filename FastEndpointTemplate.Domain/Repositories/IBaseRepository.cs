@@ -6,12 +6,12 @@ public interface IBaseRepository<T> where T : class
 {
     IQueryable<T> Get();
     IQueryable<T> Get(Expression<Func<T, bool>> predicate);
-    Task<T?> GetByIdAsync(Guid id);
-    Task AddAsync(T? entity);
-    Task AddRangeAsync(IEnumerable<T> entities);
-    Task UpdateAsync(T? entity);
-    Task UpdateRangeAsync(IEnumerable<T> entities);
-    Task DeleteAsync(T? entity);
-    Task DeleteAsync(Guid id);
-    Task DeleteRangeAsync(IEnumerable<T> entities);
+    Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task AddAsync(T? entity, CancellationToken cancellationToken);
+    Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
+    Task UpdateAsync(T? entity, CancellationToken cancellationToken);
+    Task UpdateRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
+    Task DeleteAsync(T? entity, CancellationToken cancellationToken);
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+    Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken);
 }

@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FastEndpointTemplate.Persistence.Repositories;
 
-public class UserRepository : BaseRepository<User>, IUserRepository
+public class UserRepository(ApplicationContext context)
+    : BaseRepository<User>(context), IUserRepository
 {
-    public UserRepository(ApplicationContext context) : base(context)
+    public Task<bool> IsUserValidAsync(string username, string password, CancellationToken cancellationToken)
     {
-    }
-
-    public Task<bool> IsUserValidAsync(string username, string password)
-    {
-        return Context.Users.AnyAsync(x => x.Username == username && x.Password == password);
+        return Context.Users
+            .Where(x => x.Username == username)
+            .Where(x => x.Password == password)
+            .AnyAsync(cancellationToken);
     }
 }

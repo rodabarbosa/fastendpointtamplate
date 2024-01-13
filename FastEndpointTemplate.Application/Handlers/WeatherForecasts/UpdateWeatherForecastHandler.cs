@@ -6,41 +6,35 @@ using FastEndpointTemplate.Shared.Exceptions;
 
 namespace FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 
-public class UpdateWeatherForecastHandler : IUpdateWeatherForecastHandler
+public sealed class UpdateWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    : IUpdateWeatherForecastHandler
 {
-    private readonly IWeatherForecastRepository _weatherForecastRepository;
-
-    public UpdateWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
-    {
-        _weatherForecastRepository = weatherForecastRepository;
-    }
-
-    public async Task<WeatherForecastContract> HandleAsync(Guid id, WeatherForecastContract contract)
+    public async Task<WeatherForecastContract> HandleAsync(Guid id, WeatherForecastContract contract, CancellationToken cancellationToken)
     {
         BadRequestException.ThrowIf(id != contract.Id, "The id in the route must match the id in the body");
 
-        var weather = await GetWeatherAsync(id);
+        var weather = await GetWeatherAsync(id, cancellationToken);
 
-        await UpdateWeatherForecast(contract, weather);
+        await UpdateWeatherForecast(contract, weather, cancellationToken);
 
         return weather!.ToWeatherForecastContract()!;
     }
 
-    private async Task<WeatherForecast> GetWeatherAsync(Guid id)
+    private async Task<WeatherForecast> GetWeatherAsync(Guid id, CancellationToken cancellationToken)
     {
-        var weather = await _weatherForecastRepository.GetByIdAsync(id);
+        var weather = await weatherForecastRepository.GetByIdAsync(id, cancellationToken);
 
         NotFoundException.ThrowIf(weather is null, $"WeatherForecast with id {id} not found");
 
-        return weather;
+        return weather!;
     }
 
-    private Task UpdateWeatherForecast(WeatherForecastContract contract, WeatherForecast weather)
+    private Task UpdateWeatherForecast(WeatherForecastContract contract, WeatherForecast weather, CancellationToken cancellationToken)
     {
-        weather.Date = contract.Date.Value;
+        weather.Date = contract.Date!.Value;
         weather.TemperatureCelsius = contract.TemperatureCelsius ?? default;
         weather.Summary = contract.Summary;
 
-        return _weatherForecastRepository.UpdateAsync(weather);
+        return weatherForecastRepository.UpdateAsync(weather, cancellationToken);
     }
 }

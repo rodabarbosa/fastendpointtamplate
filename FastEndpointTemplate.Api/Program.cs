@@ -21,6 +21,7 @@ new ConfigureFromConfigurationOptions<TokenConfiguration>(configuration.GetSecti
 builder.Services.AddJwtService(tokenConfigurations);
 
 builder.Services.AddDatabase("Template");
+builder.Services.AddHandlers();
 
 builder.Services.AddAuthorization();
 builder.Services.AddFastEndpoints();
@@ -69,7 +70,10 @@ app.UseFastEndpoints(c =>
     c.Errors.ResponseBuilder = (failures, ctx, status) =>
     {
         var errorMessages = new Dictionary<string, string>();
-        foreach (var failure in failures) errorMessages.Add(failure.PropertyName, failure.ErrorMessage);
+        foreach (var failure in failures)
+        {
+            errorMessages.Add(failure.PropertyName, failure.ErrorMessage);
+        }
 
         return new ErrorContract
         {

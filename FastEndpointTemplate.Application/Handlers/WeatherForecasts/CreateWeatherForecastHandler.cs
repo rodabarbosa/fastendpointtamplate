@@ -4,20 +4,14 @@ using FastEndpointTemplate.Shared.Contracts;
 
 namespace FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 
-public class CreateWeatherForecastHandler : ICreateWeatherForecastHandler
+public sealed class CreateWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    : ICreateWeatherForecastHandler
 {
-    private readonly IWeatherForecastRepository _weatherForecastRepository;
-
-    public CreateWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
-    {
-        _weatherForecastRepository = weatherForecastRepository;
-    }
-
-    public async Task<WeatherForecastContract?> HandleAsync(WeatherForecastContract contract)
+    public async Task<WeatherForecastContract?> HandleAsync(WeatherForecastContract contract, CancellationToken cancellationToken)
     {
         var weather = contract.ToWeatherForecast();
 
-        await _weatherForecastRepository.AddAsync(weather);
+        await weatherForecastRepository.AddAsync(weather, cancellationToken);
 
         return weather?.ToWeatherForecastContract();
     }

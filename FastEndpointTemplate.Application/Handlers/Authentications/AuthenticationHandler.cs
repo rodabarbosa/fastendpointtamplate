@@ -9,25 +9,15 @@ using System.Security.Principal;
 
 namespace FastEndpointTemplate.Application.Handlers.Authentications;
 
-public class AuthenticationHandler : IAuthenticationHandler
+public class AuthenticationHandler(
+    IUserRepository userRepository,
+    ISigningConfiguration signingConfiguration,
+    ITokenConfiguration tokenConfiguration)
+    : IAuthenticationHandler
 {
-    private readonly ISigningConfiguration _signingConfiguration;
-    private readonly ITokenConfiguration _tokenConfiguration;
-    private readonly IUserRepository _userRepository;
-
-    public AuthenticationHandler(IUserRepository userRepository,
-        ISigningConfiguration signingConfiguration,
-        ITokenConfiguration tokenConfiguration)
+    public async Task<AuthenticationResponseContract> HandleAsync(AuthenticationContract contract, CancellationToken cancellationToken)
     {
-        _userRepository = userRepository;
-        _signingConfiguration = signingConfiguration;
-        _tokenConfiguration = tokenConfiguration;
-    }
-
-    public async Task<AuthenticationResponseContract> HandleAsync(AuthenticationContract contract)
-    {
-        var validCredentials = await _userRepository.IsUserValidAsync(contract.Username!, contract.Password!);
-
+        var validCredentials = await userRepository.IsUserValidAsync(contract.Username!, contract.Password!, cancellationToken);
         BadRequestException.ThrowIf(!validCredentials, "Não foi possível autenticar o usuário");
 
         var identity = CreateIdentity();
@@ -50,9 +40,13 @@ public class AuthenticationHandler : IAuthenticationHandler
     private AuthenticationResponseContract CreateAuthenticationResponse(ClaimsIdentity identity, string username)
     {
         var createdDate = DateTime.Now;
-        var expiresDate = createdDate + TimeSpan.FromSeconds(_tokenConfiguration.Seconds);
+        var expiresDate = createdDate + TimeSpan.FromSeconds(tokenConfiguration.Seconds);
 
-        var token = CreateToken(identity, _signingConfiguration, _tokenConfiguration, createdDate, expiresDate);
+        var token = CreateToken(identity,
+            signingConfiguration,
+            tokenConfiguration,
+            createdDate,
+            expiresDate);
 
         return new AuthenticationResponseContract
         {
@@ -75,6 +69,7 @@ public class AuthenticationHandler : IAuthenticationHandler
             NotBefore = createdDate,
             Expires = expiresDate
         });
+
         return handler.WriteToken(securityToken);
     }
 }

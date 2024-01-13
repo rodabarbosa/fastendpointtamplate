@@ -15,7 +15,7 @@ public class UserRepositoryTest
     [InlineData("admin", "admin", false)]
     public async Task IsUserValid_Validation(string username, string password, bool valid)
     {
-        var result = await _repository.IsUserValidAsync(username, password);
+        var result = await _repository.IsUserValidAsync(username, password, CancellationToken.None);
         if (valid)
             Assert.True(result);
         else

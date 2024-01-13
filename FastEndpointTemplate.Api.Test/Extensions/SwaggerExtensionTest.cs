@@ -7,22 +7,20 @@ public class SwaggerExtensionTest
     [Fact]
     public void AddService()
     {
-        var builder = WebApplication.CreateBuilder();
-        var serviceCollection = builder.Services;
-
-        var apiInfo = new ApiInfo
+        var action = () =>
         {
-            Title = "Test",
-            Description = "Test",
-            Version = "V0.1"
+            var apiInfo = new ApiInfo
+            {
+                Title = "Test",
+                Description = "Test",
+                Version = "V0.1"
+            };
+
+            var builder = WebApplication.CreateBuilder();
+            builder.Services.AddSwagger(apiInfo);
         };
 
-
-        serviceCollection.AddSwagger(apiInfo);
-
-        var app = builder.Build();
-        app.UseSwaggerDoc();
-
-        Assert.True(true);
+        action.Should()
+            .NotThrow();
     }
 }

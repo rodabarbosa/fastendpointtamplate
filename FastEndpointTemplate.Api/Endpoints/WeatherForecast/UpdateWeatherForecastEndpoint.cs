@@ -9,21 +9,15 @@ namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
 [HttpPut("/weatherforecast/{id}")]
 [Authorize("Bearer")]
-public class UpdateWeatherForecastEndpoint : Endpoint<UpdateWeatherForecastRequestContract, WeatherForecastContract>
+public sealed class UpdateWeatherForecastEndpoint(IUpdateWeatherForecastHandler handler)
+    : Endpoint<UpdateWeatherForecastRequestContract, WeatherForecastContract>
 {
-    private readonly IUpdateWeatherForecastHandler _handler;
-
-    public UpdateWeatherForecastEndpoint(IUpdateWeatherForecastHandler handler)
-    {
-        _handler = handler;
-    }
-
     public override async Task HandleAsync(UpdateWeatherForecastRequestContract req, CancellationToken ct)
     {
         BadRequestException.ThrowIf(req.Id is null, "weather forecast id not informed");
         BadRequestException.ThrowIf(req.WeatherForecast is null, "weather forecast not informed");
 
-        var response = await _handler.HandleAsync(req.Id ?? Guid.Empty, req.WeatherForecast!);
+        var response = await handler.HandleAsync(req.Id ?? Guid.Empty, req.WeatherForecast!, ct);
 
         await SendAsync(response, (int)HttpStatusCode.NoContent, ct);
     }

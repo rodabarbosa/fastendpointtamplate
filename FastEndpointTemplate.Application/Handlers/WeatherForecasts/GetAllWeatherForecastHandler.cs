@@ -8,18 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 
-public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
+public sealed class GetAllWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    : IGetAllWeatherForecastHandler
 {
-    private readonly IWeatherForecastRepository _weatherForecastRepository;
-
-    public GetAllWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    public async Task<List<WeatherForecastContract>> HandleAsync(string? param, CancellationToken cancellationToken)
     {
-        _weatherForecastRepository = weatherForecastRepository;
-    }
-
-    public async Task<List<WeatherForecastContract>> HandleAsync(string? param)
-    {
-        var weathers = _weatherForecastRepository.Get();
+        var weathers = weatherForecastRepository.Get();
 
         weathers = FilterByDate(weathers, param);
 
@@ -28,7 +22,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
         weathers = FilterByTemperatureFahrenheit(weathers, param);
 
         if (weathers is null)
-            return new List<WeatherForecastContract>();
+            return [];
 
         var result = await weathers.Select(x => new WeatherForecastContract
             {
@@ -37,7 +31,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
                 TemperatureCelsius = x.TemperatureCelsius,
                 Summary = x.Summary
             })
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         return result;
     }

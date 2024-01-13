@@ -10,9 +10,7 @@ public class BadRequestExceptionTest
     public void ThrowException_Param(string? message, bool throws)
     {
         if (throws)
-        {
             Assert.Throws<BadRequestException>(() => BadRequestException.ThrowIf(throws, message));
-        }
         else
         {
             BadRequestException.ThrowIf(throws, message);

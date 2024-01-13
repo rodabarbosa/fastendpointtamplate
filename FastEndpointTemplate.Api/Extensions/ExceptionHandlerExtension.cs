@@ -39,6 +39,7 @@ public static class ExceptionHandlerExtension
     private static ErrorContract GetErrorMessage(Exception? exception)
     {
         if (exception is null)
+        {
             return new ErrorContract
             {
                 Code = (int)HttpStatusCode.BadRequest,
@@ -46,6 +47,7 @@ public static class ExceptionHandlerExtension
                 Exception = default,
                 StackTrace = default
             };
+        }
 
         return exception switch
         {

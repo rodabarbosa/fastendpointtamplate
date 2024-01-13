@@ -10,9 +10,7 @@ public class PersistenceExceptionTest
     public void ThrowException_Param(string? message, bool throws)
     {
         if (throws)
-        {
             Assert.Throws<PersistenceException>(() => PersistenceException.ThrowIf(throws, message));
-        }
         else
         {
             PersistenceException.ThrowIf(throws, message);
