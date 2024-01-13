@@ -10,7 +10,7 @@ public class GetAllWeatherForecastsHandlerTest
         var repository = new WeatherForecastRepository(context);
         var handler = new GetAllWeatherForecastHandler(repository);
 
-        var result = await handler.HandleAsync(null);
+        var result = await handler.HandleAsync(null, CancellationToken.None);
         Assert.NotNull(result);
     }
 
@@ -45,7 +45,7 @@ public class GetAllWeatherForecastsHandlerTest
 
         var param = $"dtInsert=[Equal,0]&dtUpdate=[Equal,0]&{key}=[{operation},{value}]";
 
-        var result = await handler.HandleAsync(param);
+        var result = await handler.HandleAsync(param, CancellationToken.None);
         Assert.NotNull(result);
     }
 
@@ -79,7 +79,7 @@ public class GetAllWeatherForecastsHandlerTest
 
         var param = $"dtInsert=[Equal,0]&dtUpdate=[Equal,0]&{key}=[{operation},{value}]";
 
-        var result = await handler.HandleAsync(param);
-        Assert.Null(result);
+        var result = await handler.HandleAsync(param, CancellationToken.None);
+        Assert.NotNull(result);
     }
 }

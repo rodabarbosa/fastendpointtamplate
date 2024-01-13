@@ -6,3 +6,4 @@ global using FastEndpointTemplate.Api.Validators;
 global using FastEndpointTemplate.Shared.Contracts;
 global using FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 global using FastEndpointTemplate.Application.Handlers;
+global using FluentAssertions;

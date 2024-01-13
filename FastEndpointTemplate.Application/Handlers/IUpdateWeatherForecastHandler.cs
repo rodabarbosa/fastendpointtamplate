@@ -4,5 +4,5 @@ namespace FastEndpointTemplate.Application.Handlers;
 
 public interface IUpdateWeatherForecastHandler
 {
-    Task<WeatherForecastContract> HandleAsync(Guid id, WeatherForecastContract contract);
+    Task<WeatherForecastContract> HandleAsync(Guid id, WeatherForecastContract contract, CancellationToken cancellationToken);
 }

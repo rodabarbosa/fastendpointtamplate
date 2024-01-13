@@ -3,21 +3,15 @@ using FastEndpointTemplate.Shared.Exceptions;
 
 namespace FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 
-public class DeleteWeatherForecastHandler : IDeleteWeatherForecastHandler
+public sealed class DeleteWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    : IDeleteWeatherForecastHandler
 {
-    private readonly IWeatherForecastRepository _weatherForecastRepository;
-
-    public DeleteWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    public async Task HandleAsync(Guid id, CancellationToken cancellationToken)
     {
-        _weatherForecastRepository = weatherForecastRepository;
-    }
-
-    public async Task HandleAsync(Guid id)
-    {
-        var weather = await _weatherForecastRepository.GetByIdAsync(id);
+        var weather = await weatherForecastRepository.GetByIdAsync(id, cancellationToken);
 
         NotFoundException.ThrowIf(weather is null, $"WeatherForecast with id {id} not found");
 
-        await _weatherForecastRepository.DeleteAsync(weather);
+        await weatherForecastRepository.DeleteAsync(weather, cancellationToken);
     }
 }

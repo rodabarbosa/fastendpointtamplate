@@ -8,18 +8,12 @@ namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
 [HttpDelete("/weatherforecast/{id}")]
 [Authorize("Bearer")]
-public class DeleteWeatherForecastEndpoint : Endpoint<DeleteWeatherForecastRequestContract, DeleteResponseContract>
+public sealed class DeleteWeatherForecastEndpoint(IDeleteWeatherForecastHandler handler)
+    : Endpoint<DeleteWeatherForecastRequestContract, DeleteResponseContract>
 {
-    private readonly IDeleteWeatherForecastHandler _handler;
-
-    public DeleteWeatherForecastEndpoint(IDeleteWeatherForecastHandler handler)
-    {
-        _handler = handler;
-    }
-
     public override async Task HandleAsync(DeleteWeatherForecastRequestContract req, CancellationToken ct)
     {
-        await _handler.HandleAsync(req.Id ?? Guid.Empty);
+        await handler.HandleAsync(req.Id ?? Guid.Empty, ct);
 
         var response = new DeleteResponseContract { Success = true };
 

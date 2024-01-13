@@ -29,7 +29,7 @@ public class WeatherForecastConverterTest
     public void ToWeatherForecast_WithValidWeatherForecastDto_ReturnsNull()
     {
         // Arrange
-        WeatherForecastContract weatherForecastDto = null;
+        WeatherForecastContract? weatherForecastDto = null;
 
         // Act
         var weatherForecast = weatherForecastDto.ToWeatherForecast();
@@ -65,7 +65,7 @@ public class WeatherForecastConverterTest
     public void ToWeatherForecastContract_WithValidWeatherForecast_ReturnsNull()
     {
         // Arrange
-        WeatherForecast weatherForecast = null;
+        WeatherForecast? weatherForecast = null;
 
         // Act
         var weatherForecastContract = weatherForecast.ToWeatherForecastContract();

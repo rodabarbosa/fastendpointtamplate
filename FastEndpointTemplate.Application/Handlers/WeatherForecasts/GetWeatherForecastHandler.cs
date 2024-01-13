@@ -3,18 +3,12 @@ using FastEndpointTemplate.Shared.Contracts;
 
 namespace FastEndpointTemplate.Application.Handlers.WeatherForecasts;
 
-public class GetWeatherForecastHandler : IGetWeatherForecastHandler
+public sealed class GetWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    : IGetWeatherForecastHandler
 {
-    private readonly IWeatherForecastRepository _weatherForecastRepository;
-
-    public GetWeatherForecastHandler(IWeatherForecastRepository weatherForecastRepository)
+    public async Task<WeatherForecastContract?> HandleAsync(Guid id, CancellationToken cancellationToken)
     {
-        _weatherForecastRepository = weatherForecastRepository;
-    }
-
-    public async Task<WeatherForecastContract?> HandleAsync(Guid id)
-    {
-        var result = await _weatherForecastRepository.GetByIdAsync(id);
+        var result = await weatherForecastRepository.GetByIdAsync(id, cancellationToken);
 
         if (result is null)
             return default;

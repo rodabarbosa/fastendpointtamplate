@@ -12,7 +12,7 @@ public class GetWeatherForecastHandlerTest
         var repository = new WeatherForecastRepository(context);
         var handler = new GetWeatherForecastHandler(repository);
 
-        var result = await handler.HandleAsync(guid);
+        var result = await handler.HandleAsync(guid, CancellationToken.None);
 
         if (expected)
             Assert.NotNull(result);

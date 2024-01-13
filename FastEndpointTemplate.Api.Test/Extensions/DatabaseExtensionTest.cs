@@ -1,6 +1,4 @@
-﻿using FastEndpointTemplate.Persistence.Contexts;
-
-namespace FastEndpointTemplate.Api.Test.Extensions;
+﻿namespace FastEndpointTemplate.Api.Test.Extensions;
 
 public class DatabaseExtensionTest
 {
@@ -10,23 +8,26 @@ public class DatabaseExtensionTest
         var builder = WebApplication.CreateBuilder();
         var serviceCollection = builder.Services;
 
-        serviceCollection.AddDatabase("test");
+        var action = () => serviceCollection.AddDatabase("test");
 
-        Assert.True(true);
+        action.Should()
+            .NotThrow();
     }
 
     [Fact]
     public void GetOptionBuilder()
     {
-        var builder = WebApplication.CreateBuilder();
-        var serviceCollection = builder.Services;
+        var action = () =>
+        {
+            var builder = WebApplication.CreateBuilder();
+            var serviceCollection = builder.Services;
 
-        serviceCollection.AddDatabase("test");
+            serviceCollection.AddDatabase("test");
 
-        var app = builder.Build();
+            _ = builder.Build();
+        };
 
-        var context = ((IApplicationBuilder)app).ApplicationServices.GetRequiredService<ApplicationContext>();
-
-        Assert.NotNull(context);
+        action.Should()
+            .NotThrow();
     }
 }

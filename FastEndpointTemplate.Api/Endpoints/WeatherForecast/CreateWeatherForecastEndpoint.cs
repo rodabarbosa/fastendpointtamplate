@@ -9,21 +9,15 @@ namespace FastEndpointTemplate.Api.Endpoints.WeatherForecast;
 
 [HttpPost("/weatherforecast")]
 [Authorize("Bearer")]
-public class CreateWeatherForecastEndpoint : Endpoint<CreateWeatherForecastRequestContract, WeatherForecastContract>
+public sealed class CreateWeatherForecastEndpoint(ICreateWeatherForecastHandler handler)
+    : Endpoint<CreateWeatherForecastRequestContract, WeatherForecastContract>
 {
-    private readonly ICreateWeatherForecastHandler _handler;
-
-    public CreateWeatherForecastEndpoint(ICreateWeatherForecastHandler handler)
-    {
-        _handler = handler;
-    }
-
     public override async Task HandleAsync(CreateWeatherForecastRequestContract req, CancellationToken ct)
     {
         BadRequestException.ThrowIf(req.WeatherForecast is null, "WeatherForecast was not informed");
 
-        var response = await _handler.HandleAsync(req.WeatherForecast!);
+        var response = await handler.HandleAsync(req.WeatherForecast!, ct);
 
-        await SendAsync(response, (int)HttpStatusCode.Created, ct);
+        await SendAsync(response!, (int)HttpStatusCode.Created, ct);
     }
 }

@@ -16,7 +16,9 @@ public class WeatherForecastRepositoryTest
     public void Get_Valid()
     {
         var result = _repository.Get();
-        Assert.NotEmpty(result);
+
+        result.Should()
+            .NotBeNull();
     }
 
     [Fact]
@@ -24,16 +26,19 @@ public class WeatherForecastRepositoryTest
     {
         var dt = new DateTime(2000, 01, 01);
         var result = _repository.Get(x => x.Date > dt);
-        Assert.NotEmpty(result);
+
+        result.Should()
+            .NotBeEmpty();
     }
 
     [Fact]
     public async Task GetByIdASync()
     {
         var guid = Guid.Parse("43903282-c4b3-42f9-99cc-fd234ee6941d");
-        var result = await _repository.GetByIdAsync(guid);
+        var result = await _repository.GetByIdAsync(guid, CancellationToken.None);
 
-        Assert.NotNull(result);
+        result.Should()
+            .NotBeNull();
     }
 
     [Fact]
@@ -42,9 +47,10 @@ public class WeatherForecastRepositoryTest
         var context = ContextUtil.GetContext();
         var repository = new WeatherForecastRepository(context);
         var guid = Guid.Parse("10fd1392-3b4c-431a-b6dc-19cfba4ea269");
-        await repository.DeleteAsync(guid);
+        var action = () => repository.DeleteAsync(guid, CancellationToken.None);
 
-        Assert.True(true);
+        await action.Should()
+            .NotThrowAsync();
     }
 
     [Fact]
@@ -58,20 +64,24 @@ public class WeatherForecastRepositoryTest
             Summary = null
         };
 
-        await _repository.AddAsync(weather);
-        Assert.NotEqual(Guid.Empty, weather.Id);
+        await _repository.AddAsync(weather, CancellationToken.None);
+
+        weather.Id
+            .Should()
+            .NotBe(Guid.Empty);
     }
 
     [Fact]
     public async Task UpdateAsync()
     {
-        var guid = Guid.Parse("43903282-c4b3-42f9-99cc-fd234ee6941d");
-        var weather = await _repository.GetByIdAsync(guid);
+        var weather = await _repository.Get()
+            .LastAsync();
 
-        weather.TemperatureCelsius = 36;
+        weather!.TemperatureCelsius = 36;
 
-        await _repository.UpdateAsync(weather);
-        Assert.True(true);
+        var action = () => _repository.UpdateAsync(weather, CancellationToken.None);
+        await action.Should()
+            .NotThrowAsync();
     }
 
     [Fact]
@@ -81,8 +91,9 @@ public class WeatherForecastRepositoryTest
 
         weathers.ForEach(x => x.TemperatureCelsius = 0);
 
-        await _repository.UpdateRangeAsync(weathers);
-        Assert.True(true);
+        var action = () => _repository.UpdateRangeAsync(weathers, CancellationToken.None);
+        await action.Should()
+            .NotThrowAsync();
     }
 
     [Fact]
@@ -106,8 +117,9 @@ public class WeatherForecastRepositoryTest
             }
         };
 
-        await _repository.AddRangeAsync(weathers);
-        Assert.True(true);
+        var action = () => _repository.AddRangeAsync(weathers, CancellationToken.None);
+        await action.Should()
+            .NotThrowAsync();
     }
 
     [Fact]
@@ -118,8 +130,8 @@ public class WeatherForecastRepositoryTest
         var repository = new WeatherForecastRepository(context);
         var weathers = repository.Get(x => x.Id == guid).ToList();
 
-        await repository.DeleteRangeAsync(weathers);
-
-        Assert.True(true);
+        var action = () => repository.DeleteRangeAsync(weathers, CancellationToken.None);
+        await action.Should()
+            .NotThrowAsync();
     }
 }

@@ -2,5 +2,5 @@
 
 public interface IDeleteWeatherForecastHandler
 {
-    Task HandleAsync(Guid id);
+    Task HandleAsync(Guid id, CancellationToken cancellationToken);
 }

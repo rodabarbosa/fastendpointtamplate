@@ -7,7 +7,8 @@ public class WeatherForecastTest
     {
         var weatherForecast = new WeatherForecast();
 
-        Assert.NotNull(weatherForecast);
+        weatherForecast.Should()
+            .NotBeNull();
     }
 
     [Fact]
@@ -25,10 +26,23 @@ public class WeatherForecastTest
             Summary = summary
         };
 
-        Assert.NotNull(weatherForecast);
-        Assert.Equal(guid, weatherForecast.Id);
-        Assert.Equal(date, weatherForecast.Date);
-        Assert.Equal(0, weatherForecast.TemperatureCelsius);
-        Assert.Equal(summary, weatherForecast.Summary);
+        weatherForecast.Should()
+            .NotBeNull();
+
+        weatherForecast.Id
+            .Should()
+            .Be(guid);
+
+        weatherForecast.Date
+            .Should()
+            .Be(date);
+
+        weatherForecast.TemperatureCelsius
+            .Should()
+            .Be(0);
+
+        weatherForecast.Summary
+            .Should()
+            .Be(summary);
     }
 }
