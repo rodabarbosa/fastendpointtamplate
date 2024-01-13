@@ -17,7 +17,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
         _weatherForecastRepository = weatherForecastRepository;
     }
 
-    public async Task<List<WeatherForecastContract>?> HandleAsync(string? param)
+    public async Task<List<WeatherForecastContract>> HandleAsync(string? param)
     {
         var weathers = _weatherForecastRepository.Get();
 
@@ -28,7 +28,7 @@ public class GetAllWeatherForecastHandler : IGetAllWeatherForecastHandler
         weathers = FilterByTemperatureFahrenheit(weathers, param);
 
         if (weathers is null)
-            return default;
+            return new List<WeatherForecastContract>();
 
         var result = await weathers.Select(x => new WeatherForecastContract
             {

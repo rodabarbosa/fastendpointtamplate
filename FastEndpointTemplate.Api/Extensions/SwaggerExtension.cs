@@ -21,6 +21,6 @@ static public class SwaggerExtension
     static public void UseSwaggerDoc(this IApplicationBuilder app)
     {
         app.UseOpenApi();
-        app.UseSwaggerUi3(s => s.ConfigureDefaults());
+        app.UseSwaggerUi(s => s.ConfigureDefaults());
     }
 }

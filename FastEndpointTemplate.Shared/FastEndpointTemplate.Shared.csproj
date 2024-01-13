@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>default</LangVersion>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="FastEndpoints" Version="5.10.0" />
-        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.30.0" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FastEndpoints" Version="5.21.2"/>
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.2.0"/>
+  </ItemGroup>
 
 </Project>
