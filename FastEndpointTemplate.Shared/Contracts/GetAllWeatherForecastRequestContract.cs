@@ -1,6 +1,11 @@
 namespace FastEndpointTemplate.Shared.Contracts;
 
-public class GetAllWeatherForecastRequestContract
+public class GetAllWeatherForecastRequestContract(string? @params)
 {
-    public string? Params { get; set; }
+    public GetAllWeatherForecastRequestContract()
+        : this(default)
+    {
+    }
+
+    public string? Params { get; set; } = @params;
 }

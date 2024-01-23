@@ -23,7 +23,7 @@ public class JsonExtensionTest
     [Fact]
     public void FromJson_Should_Return_Object()
     {
-        var testObject = JsonTest.FromJson<ErrorContract?>();
+        var testObject = JsonTest.FromJson<ErrorContract>();
 
         Assert.NotNull(testObject);
 
@@ -37,7 +37,7 @@ public class JsonExtensionTest
     public void FromJson_ReturnNull()
     {
         var json = string.Empty;
-        var testObject = json.FromJson<ErrorContract?>();
+        var testObject = json.FromJson<ErrorContract>();
         Assert.Null(testObject);
     }
 }

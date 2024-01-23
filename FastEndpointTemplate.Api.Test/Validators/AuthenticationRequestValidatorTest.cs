@@ -10,21 +10,19 @@ public class AuthenticationRequestValidatorTest
     }
 
     [Theory]
-    [InlineData("admin", "admin@123", true)]
-    [InlineData("admin", "admin", false)]
-    public void Authentication_Valid(string username, string password, bool valid)
+    [InlineData("admin", "admin@123")]
+    [InlineData("admin", "admin")]
+    public void Authentication_Valid(string username, string password)
     {
         var authentication = new AuthenticationRequestContract
         {
-            Authentication = new AuthenticationContract
-            {
-                Username = username,
-                Password = password
-            }
+            Authentication = new AuthenticationContract(username, password)
         };
 
         var result = _validator.Validate(authentication);
 
-        Assert.True(result.IsValid);
+        result.IsValid
+            .Should()
+            .BeTrue();
     }
 }

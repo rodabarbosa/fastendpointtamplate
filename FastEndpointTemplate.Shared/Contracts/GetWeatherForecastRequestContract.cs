@@ -1,6 +1,11 @@
 ﻿namespace FastEndpointTemplate.Shared.Contracts;
 
-public class GetWeatherForecastRequestContract
+public class GetWeatherForecastRequestContract(Guid? id)
 {
-    public Guid? Id { get; set; }
+    public GetWeatherForecastRequestContract()
+        : this(default)
+    {
+    }
+
+    public Guid? Id { get; set; } = id;
 }

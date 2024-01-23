@@ -11,12 +11,16 @@ public class OperationParamTest
             Value = 0
         };
 
-        Assert.NotNull(operationParam);
-        Assert.NotNull(operationParam.Operation);
-        Assert.Equal(Operation.Equal, operationParam.Operation);
+        operationParam
+            .Should()
+            .NotBeNull();
 
-        Assert.NotNull(operationParam.Value);
-        Assert.IsType<int>(operationParam.Value);
-        Assert.Equal(0, operationParam.Value);
+        operationParam.Operation
+            .Should()
+            .Be(Operation.Equal);
+
+        operationParam.Value
+            .Should()
+            .Be(0);
     }
 }

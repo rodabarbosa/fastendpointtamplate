@@ -1,9 +1,14 @@
 namespace FastEndpointTemplate.Shared.Contracts;
 
-public sealed class ErrorContract
+public sealed class ErrorContract(int code, object? error, string? exception, string? stackTrace)
 {
-    public int Code { get; init; }
-    public object? Error { get; init; }
-    public string? Exception { get; init; }
-    public string? StackTrace { get; init; }
+    public ErrorContract()
+        : this(400, null, null, null)
+    {
+    }
+
+    public int Code { get; init; } = code;
+    public object? Error { get; init; } = error;
+    public string? Exception { get; init; } = exception;
+    public string? StackTrace { get; init; } = stackTrace;
 }

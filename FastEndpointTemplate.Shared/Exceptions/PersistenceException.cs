@@ -8,15 +8,15 @@ public class PersistenceException : Exception
     {
     }
 
-    public PersistenceException(string message) : this(message, default)
+    public PersistenceException(string? message) : this(message, default)
     {
     }
 
-    public PersistenceException(Exception innerException) : this(DefaultMessage, innerException)
+    public PersistenceException(Exception? innerException) : this(DefaultMessage, innerException)
     {
     }
 
-    public PersistenceException(string message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
+    public PersistenceException(string? message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
     {
     }
 

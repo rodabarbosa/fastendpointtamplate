@@ -8,18 +8,12 @@ namespace FastEndpointTemplate.Api.Endpoints.Authentications;
 
 [HttpPost("/authenticate")]
 [AllowAnonymous]
-public class AuthenticateEndpoint : Endpoint<AuthenticationRequestContract, AuthenticationResponseContract>
+public class AuthenticateEndpoint(IAuthenticationHandler handler)
+    : Endpoint<AuthenticationRequestContract, AuthenticationResponseContract>
 {
-    private readonly IAuthenticationHandler _authenticationHandler;
-
-    public AuthenticateEndpoint(IAuthenticationHandler authenticationHandler)
-    {
-        _authenticationHandler = authenticationHandler;
-    }
-
     public override async Task HandleAsync(AuthenticationRequestContract req, CancellationToken ct)
     {
-        var response = await _authenticationHandler.HandleAsync(req.Authentication!, ct);
+        var response = await handler.HandleAsync(req.Authentication!, ct);
 
         await SendAsync(response, (int)HttpStatusCode.Created, ct);
     }

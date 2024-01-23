@@ -13,8 +13,8 @@ public class AuthenticationResponseContractTest
 
     [Theory]
     [InlineData("token", "username", "2021-01-01 00:00:00", "2021-01-01 01:00:00")]
-    [InlineData(null, null, "2021-01-01 00:00:00", "2021-01-01 01:00:00")]
-    public void AuthenticateResponseContract_NotEmpty(string? token, string? username, DateTime createdAt, DateTime expires)
+    [InlineData("", "", "2021-01-01 00:00:00", "2021-01-01 01:00:00")]
+    public void AuthenticateResponseContract_NotEmpty(string token, string username, DateTime createdAt, DateTime expires)
     {
         var objectTest = new AuthenticationResponseContract
         {

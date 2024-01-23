@@ -7,11 +7,20 @@ public class TokenConfigurationTest
     {
         var tokenConfiguration = new TokenConfiguration();
 
-        Assert.NotNull(tokenConfiguration);
-        Assert.NotNull(tokenConfiguration.Issuer);
-        Assert.NotNull(tokenConfiguration.Audience);
-        Assert.NotNull(tokenConfiguration.Seconds);
-        Assert.True(tokenConfiguration.Seconds > 0);
+        tokenConfiguration.Should()
+            .NotBeNull();
+
+        tokenConfiguration.Issuer
+            .Should()
+            .NotBeNull();
+
+        tokenConfiguration.Audience
+            .Should()
+            .NotBeNull();
+
+        tokenConfiguration.Seconds
+            .Should()
+            .BeGreaterThan(0);
     }
 
     [Theory]
@@ -25,9 +34,19 @@ public class TokenConfigurationTest
             Seconds = value
         };
 
-        Assert.NotNull(tokenConfiguration);
-        Assert.Equal(text, tokenConfiguration.Issuer);
-        Assert.Equal(text, tokenConfiguration.Audience);
-        Assert.Equal(value, tokenConfiguration.Seconds);
+        tokenConfiguration
+            .Should()
+            .NotBeNull();
+
+        tokenConfiguration.Issuer
+            .Should()
+            .Be(text);
+
+        tokenConfiguration.Audience
+            .Should()
+            .Be(text);
+        tokenConfiguration.Seconds
+            .Should()
+            .Be(value);
     }
 }

@@ -13,27 +13,73 @@ public sealed class GetAllWeatherForecastHandler(IWeatherForecastRepository weat
 {
     public async Task<List<WeatherForecastContract>> HandleAsync(string? param, CancellationToken cancellationToken)
     {
-        var weathers = weatherForecastRepository.Get();
-
-        weathers = FilterByDate(weathers, param);
-
-        weathers = FilterByTemperatureCelsius(weathers, param);
-
-        weathers = FilterByTemperatureFahrenheit(weathers, param);
+        var weathers = GetWeatherForecast(param);
 
         if (weathers is null)
             return [];
 
-        var result = await weathers.Select(x => new WeatherForecastContract
-            {
-                Id = x.Id,
-                Date = x.Date,
-                TemperatureCelsius = x.TemperatureCelsius,
-                Summary = x.Summary
-            })
+        var returningFields = GetReturningFields(param);
+        return await weathers
+            .Select(x => returningFields.Any()
+                ? ConvertSelectedFields(x, returningFields)
+                : ConvertWithAllFields(x))
             .ToListAsync(cancellationToken);
+    }
 
-        return result;
+    private static WeatherForecastContract ConvertWithAllFields(WeatherForecast weather)
+    {
+        return new WeatherForecastContract
+        {
+            Id = weather.Id,
+            Date = weather.Date,
+            TemperatureCelsius = weather.TemperatureCelsius,
+            TemperatureFahrenheit = weather.TemperatureCelsius.ToFahrenheit(),
+            Summary = weather.Summary
+        };
+    }
+
+    private static WeatherForecastContract ConvertSelectedFields(WeatherForecast x, IEnumerable<string> returningFields)
+    {
+        return new WeatherForecastContract
+        {
+            Id = IsFieldToReturn(returningFields, "id") ? x.Id : null,
+            Date = IsFieldToReturn(returningFields, "date") ? x.Date : null,
+            TemperatureCelsius = IsFieldToReturn(returningFields, "temperatureCelsius") ? x.TemperatureCelsius : null,
+            TemperatureFahrenheit = IsFieldToReturn(returningFields, "temperatureFahrenheit") ? x.TemperatureCelsius.ToFahrenheit() : null,
+            Summary = IsFieldToReturn(returningFields, "summary") ? x.Summary : null
+        };
+    }
+
+    private static bool IsFieldToReturn(IEnumerable<string> returningFields, string fieldName)
+    {
+        return returningFields.Any(x => x.Equals(fieldName, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static IEnumerable<string> GetReturningFields(string? param)
+    {
+        if (string.IsNullOrEmpty(param))
+            return Enumerable.Empty<string>();
+
+        var values = param.Split("&");
+        var aux = values.FirstOrDefault(x => x.StartsWith("fields="));
+        if (string.IsNullOrEmpty(aux))
+            return Enumerable.Empty<string>();
+
+        var fields = aux.Split("=");
+        return fields[1]
+            .TrimStart('[')
+            .TrimEnd(']')
+            .Split(',')
+            .Select(x => x.Trim());
+    }
+
+    private IQueryable<WeatherForecast>? GetWeatherForecast(string? param)
+    {
+        var weathers = weatherForecastRepository.Get();
+        weathers = FilterByDate(weathers, param!);
+        weathers = FilterByTemperatureCelsius(weathers, param!);
+        weathers = FilterByTemperatureFahrenheit(weathers, param!);
+        return weathers;
     }
 
     private static IQueryable<WeatherForecast>? FilterByDate(IQueryable<WeatherForecast>? weathers, string param)

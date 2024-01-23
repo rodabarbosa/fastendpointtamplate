@@ -16,7 +16,7 @@ public class UpdatePersistenceException : Exception
     {
     }
 
-    public UpdatePersistenceException(string message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
+    public UpdatePersistenceException(string? message, Exception? innerException) : base(DefineMessage(message, DefaultMessage), innerException)
     {
     }
 

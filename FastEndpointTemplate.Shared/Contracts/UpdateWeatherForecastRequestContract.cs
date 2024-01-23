@@ -2,8 +2,13 @@
 
 namespace FastEndpointTemplate.Shared.Contracts;
 
-public class UpdateWeatherForecastRequestContract
+public class UpdateWeatherForecastRequestContract(Guid? id, WeatherForecastContract? weatherForecast)
 {
-    public Guid? Id { get; set; }
-    [FromBody] public WeatherForecastContract? WeatherForecast { get; set; }
+    public UpdateWeatherForecastRequestContract()
+        : this(default, default)
+    {
+    }
+
+    public Guid? Id { get; set; } = id;
+    [FromBody] public WeatherForecastContract? WeatherForecast { get; set; } = weatherForecast;
 }

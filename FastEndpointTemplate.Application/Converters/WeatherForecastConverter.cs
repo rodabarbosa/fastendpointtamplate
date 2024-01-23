@@ -1,5 +1,6 @@
 ﻿using FastEndpointTemplate.Domain.Entities;
 using FastEndpointTemplate.Shared.Contracts;
+using FastEndpointTemplate.Shared.Extensions;
 
 namespace FastEndpointTemplate.Application.Converters;
 
@@ -10,11 +11,15 @@ public static class WeatherForecastConverter
         if (contract is null)
             return default;
 
+        var temperature = contract.TemperatureCelsius ?? default;
+        if (contract.TemperatureCelsius is null && contract.TemperatureFahrenheit is not null)
+            temperature = contract.TemperatureFahrenheit.ToCelsius() ?? default;
+
         return new WeatherForecast
         {
             Id = contract.Id ?? Guid.Empty,
             Date = contract.Date ?? default,
-            TemperatureCelsius = contract.TemperatureCelsius ?? default,
+            TemperatureCelsius = temperature,
             Summary = contract.Summary
         };
     }
@@ -29,6 +34,7 @@ public static class WeatherForecastConverter
             Id = entity.Id,
             Date = entity.Date,
             TemperatureCelsius = entity.TemperatureCelsius,
+            TemperatureFahrenheit = entity.TemperatureCelsius.ToFahrenheit(),
             Summary = entity.Summary
         };
     }
