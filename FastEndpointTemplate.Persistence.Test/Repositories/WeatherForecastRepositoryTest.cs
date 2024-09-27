@@ -87,7 +87,9 @@ public class WeatherForecastRepositoryTest
     [Fact]
     public async Task UpdateRangeAsync()
     {
-        var weathers = _repository.Get().Take(2).ToList();
+        var weathers = _repository.Get()
+            .Take(2)
+            .ToList();
 
         weathers.ForEach(x => x.TemperatureCelsius = 0);
 

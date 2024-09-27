@@ -2,21 +2,35 @@
 
 public class AuthenticateRequestContractTest
 {
-    [Fact]
-    public void AuthenticateRequestContract_ShouldBe_Valid()
+    [Theory]
+    [InlineData("Test")]
+    public void AuthenticateRequestContract_ShouldBe_Valid(string value)
     {
         var objectTest = new AuthenticationRequestContract
         {
             Authentication = new AuthenticationContract
             {
-                Username = "Test",
-                Password = "Test"
+                Username = value,
+                Password = value
             }
         };
 
-        Assert.NotNull(objectTest);
-        Assert.NotNull(objectTest.Authentication);
-        Assert.Equal("Test", objectTest.Authentication.Username);
-        Assert.Equal("Test", objectTest.Authentication.Password);
+        objectTest
+            .Should()
+            .NotBeNull();
+
+        objectTest.Authentication
+            .Should()
+            .NotBeNull();
+
+        objectTest.Authentication
+            .Username
+            .Should()
+            .Be(value);
+
+        objectTest.Authentication
+            .Password
+            .Should()
+            .Be(value);
     }
 }

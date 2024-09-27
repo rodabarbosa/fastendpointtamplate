@@ -7,6 +7,9 @@ public class DateTimeExtensionTest
     {
         var date = "2021-01-01 00:00:00";
         var result = date.ToDateTime();
-        Assert.Equal(new DateTime(2021, 01, 01, 00, 00, 00), result);
+
+        result
+            .Should()
+            .BeSameDateAs(new DateTime(2021, 01, 01, 00, 00, 00));
     }
 }

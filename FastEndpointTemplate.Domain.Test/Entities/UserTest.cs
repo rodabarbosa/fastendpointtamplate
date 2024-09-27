@@ -7,7 +7,8 @@ public class UserTest
     {
         var user = new User();
 
-        Assert.NotNull(user);
+        user.Should()
+            .NotBeNull();
     }
 
     [Theory]

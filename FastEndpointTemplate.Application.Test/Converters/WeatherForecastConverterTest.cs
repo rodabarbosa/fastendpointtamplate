@@ -3,7 +3,7 @@
 public class WeatherForecastConverterTest
 {
     [Fact]
-    public void ToWeatherForecast_WithValidWeatherForecastDto_ReturnsWeatherForecast()
+    public void Contract_Conversion_With_Should_Include_Fahreinheit()
     {
         // Arrange
         var weatherForecastDto = new WeatherForecastContract
@@ -14,15 +14,33 @@ public class WeatherForecastConverterTest
             Summary = "Summary"
         };
 
+        weatherForecastDto.TemperatureFahrenheit
+            .Should()
+            .Be(32M);
+
         // Act
         var weatherForecast = weatherForecastDto.ToWeatherForecast();
 
         // Assert
-        Assert.NotNull(weatherForecast);
-        Assert.Equal(weatherForecastDto.Id, weatherForecast.Id);
-        Assert.Equal(weatherForecastDto.Date, weatherForecast.Date);
-        Assert.Equal(weatherForecastDto.TemperatureCelsius, weatherForecast.TemperatureCelsius);
-        Assert.Equal(weatherForecastDto.Summary, weatherForecast.Summary);
+        weatherForecast
+            .Should()
+            .NotBeNull();
+
+        weatherForecast!.Id
+            .Should()
+            .Be(weatherForecastDto.Id.Value);
+
+        weatherForecast.Date
+            .Should()
+            .Be(weatherForecastDto.Date);
+
+        weatherForecast.TemperatureCelsius
+            .Should()
+            .Be(weatherForecastDto.TemperatureCelsius);
+
+        weatherForecast.Summary
+            .Should()
+            .Be(weatherForecastDto.Summary);
     }
 
     [Fact]
@@ -35,7 +53,9 @@ public class WeatherForecastConverterTest
         var weatherForecast = weatherForecastDto.ToWeatherForecast();
 
         // Assert
-        Assert.Null(weatherForecast);
+        weatherForecast
+            .Should()
+            .BeNull();
     }
 
     [Fact]
@@ -54,11 +74,25 @@ public class WeatherForecastConverterTest
         var weatherForecastContract = weatherForecast.ToWeatherForecastContract();
 
         // Assert
-        Assert.NotNull(weatherForecastContract);
-        Assert.Equal(weatherForecast.Id, weatherForecastContract.Id);
-        Assert.Equal(weatherForecast.Date, weatherForecastContract.Date);
-        Assert.Equal(weatherForecast.TemperatureCelsius, weatherForecastContract.TemperatureCelsius);
-        Assert.Equal(weatherForecast.Summary, weatherForecastContract.Summary);
+        weatherForecastContract
+            .Should()
+            .NotBeNull();
+
+        weatherForecastContract!.Id
+            .Should()
+            .Be(weatherForecast.Id);
+
+        weatherForecastContract.Date
+            .Should()
+            .Be(weatherForecast.Date);
+
+        weatherForecastContract.TemperatureCelsius
+            .Should()
+            .Be(weatherForecast.TemperatureCelsius);
+
+        weatherForecastContract.Summary
+            .Should()
+            .Be(weatherForecast.Summary);
     }
 
     [Fact]
@@ -71,6 +105,8 @@ public class WeatherForecastConverterTest
         var weatherForecastContract = weatherForecast.ToWeatherForecastContract();
 
         // Assert
-        Assert.Null(weatherForecastContract);
+        weatherForecastContract
+            .Should()
+            .BeNull();
     }
 }

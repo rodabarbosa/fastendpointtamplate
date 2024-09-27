@@ -17,6 +17,9 @@ public class OperationExtensionTest
     {
         var operation = (Operation)value;
         var testing = operationStr.ToOperation();
-        Assert.Equal(operation, testing);
+
+        testing
+            .Should()
+            .Be(operation);
     }
 }

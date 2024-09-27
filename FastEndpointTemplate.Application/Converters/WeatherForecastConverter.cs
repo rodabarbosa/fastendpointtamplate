@@ -12,8 +12,6 @@ public static class WeatherForecastConverter
             return default;
 
         var temperature = contract.TemperatureCelsius ?? default;
-        if (contract.TemperatureCelsius is null && contract.TemperatureFahrenheit is not null)
-            temperature = contract.TemperatureFahrenheit.ToCelsius() ?? default;
 
         return new WeatherForecast
         {

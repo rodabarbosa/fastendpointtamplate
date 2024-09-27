@@ -17,7 +17,9 @@ public class JsonExtensionTest
 
         var json = testObject.ToJson();
 
-        Assert.Equal(JsonTest, json);
+        json
+            .Should()
+            .Be(JsonTest);
     }
 
     [Fact]
@@ -25,12 +27,25 @@ public class JsonExtensionTest
     {
         var testObject = JsonTest.FromJson<ErrorContract>();
 
-        Assert.NotNull(testObject);
+        testObject
+            .Should()
+            .NotBeNull();
 
-        Assert.Equal(1, testObject?.Code);
-        Assert.Equal("Test Error", testObject?.Error?.ToString());
-        Assert.Equal("Test Exception", testObject?.Exception);
-        Assert.Equal("Test StackTrace", testObject?.StackTrace);
+        testObject!.Code
+            .Should()
+            .Be(1);
+
+        testObject.Error!.ToString()
+            .Should()
+            .Be("Test Error");
+
+        testObject.Exception
+            .Should()
+            .Be("Test Exception");
+
+        testObject.StackTrace
+            .Should()
+            .Be("Test StackTrace");
     }
 
     [Fact]
@@ -38,6 +53,9 @@ public class JsonExtensionTest
     {
         var json = string.Empty;
         var testObject = json.FromJson<ErrorContract>();
-        Assert.Null(testObject);
+
+        testObject
+            .Should()
+            .BeNull();
     }
 }

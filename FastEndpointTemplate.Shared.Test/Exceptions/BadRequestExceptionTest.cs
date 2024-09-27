@@ -9,35 +9,50 @@ public class BadRequestExceptionTest
     [InlineData(null, false)]
     public void ThrowException_Param(string? message, bool throws)
     {
+        var action = () => BadRequestException.ThrowIf(throws, message);
         if (throws)
-            Assert.Throws<BadRequestException>(() => BadRequestException.ThrowIf(throws, message));
+            action
+                .Should()
+                .Throw<BadRequestException>();
         else
-        {
-            BadRequestException.ThrowIf(throws, message);
-            Assert.True(!throws);
-        }
+            action
+                .Should()
+                .NotThrow();
     }
 
     [Fact]
     public void ThrowException_Constructor()
     {
         var exception = new BadRequestException();
-        Assert.NotNull(exception.Message);
-        Assert.Null(exception.InnerException);
+        exception.Message
+            .Should()
+            .NotBeNull();
+
+        exception.InnerException
+            .Should()
+            .BeNull();
     }
 
     [Fact]
     public void ThrowException_Constructor1()
     {
         var exception = new BadRequestException("Test Exception");
-        Assert.Equal("Test Exception", exception.Message);
-        Assert.Null(exception.InnerException);
+        exception.Message
+            .Should()
+            .Be("Test Exception");
+
+        exception.InnerException
+            .Should()
+            .BeNull();
     }
 
     [Fact]
     public void ThrowException_Constructor2()
     {
         var exception = new BadRequestException(new Exception("Test Exception"));
-        Assert.Equal("Test Exception", exception.InnerException?.Message);
+        exception.InnerException!
+            .Message
+            .Should()
+            .Be("Test Exception");
     }
 }

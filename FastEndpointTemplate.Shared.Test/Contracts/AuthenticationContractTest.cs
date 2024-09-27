@@ -7,9 +7,17 @@ public class AuthenticationContractTest
     {
         var objectTest = new AuthenticationContract();
 
-        Assert.NotNull(objectTest);
-        Assert.Null(objectTest.Username);
-        Assert.Null(objectTest.Password);
+        objectTest
+            .Should()
+            .NotBeNull();
+
+        objectTest.Username
+            .Should()
+            .BeNull();
+
+        objectTest.Password
+            .Should()
+            .BeNull();
     }
 
     [Theory]
@@ -22,8 +30,16 @@ public class AuthenticationContractTest
             Password = text
         };
 
-        Assert.NotNull(objectTest);
-        Assert.Equal(text, objectTest.Username);
-        Assert.Equal(text, objectTest.Password);
+        objectTest
+            .Should()
+            .NotBeNull();
+
+        objectTest.Username
+            .Should()
+            .Be(text);
+
+        objectTest.Password
+            .Should()
+            .Be(text);
     }
 }

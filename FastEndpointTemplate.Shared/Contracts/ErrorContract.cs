@@ -2,8 +2,10 @@ namespace FastEndpointTemplate.Shared.Contracts;
 
 public sealed class ErrorContract(int code, object? error, string? exception, string? stackTrace)
 {
+    private const int DefaultCode = 400; // Bad request int
+
     public ErrorContract()
-        : this(400, null, null, null)
+        : this(DefaultCode, null, null, null)
     {
     }
 

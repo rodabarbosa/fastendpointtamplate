@@ -1,3 +1,5 @@
+using FastEndpointTemplate.Shared.Extensions;
+
 namespace FastEndpointTemplate.Shared.Contracts;
 
 /// <summary>
@@ -23,15 +25,34 @@ public class WeatherForecastContract(Guid? id, DateTime? date, decimal? temperat
     /// <summary>
     /// Temperature in celsius unit.
     /// </summary>
-    public decimal? TemperatureCelsius { get; set; } = temperatureCelsius;
+    public decimal? TemperatureCelsius
+    {
+        get => _celsius;
+        set
+        {
+            _celsius = value;
+            _fahrenheit = value?.ToFahrenheit();
+        }
+    }
 
     /// <summary>
     /// Temperature in fahrenheit unit.
     /// </summary>
-    public decimal? TemperatureFahrenheit { get; set; } = temperatureFahrenheit;
+    public decimal? TemperatureFahrenheit
+    {
+        get => _fahrenheit;
+        set
+        {
+            _fahrenheit = value;
+            _celsius = value?.ToCelsius();
+        }
+    }
 
     /// <summary>
     /// Weather condition.
     /// </summary>
     public string? Summary { get; set; } = summary;
+
+    private decimal? _fahrenheit = temperatureFahrenheit;
+    private decimal? _celsius = temperatureCelsius;
 }

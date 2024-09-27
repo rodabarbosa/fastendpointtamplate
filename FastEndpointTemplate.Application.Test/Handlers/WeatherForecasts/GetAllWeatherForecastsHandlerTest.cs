@@ -1,17 +1,25 @@
-﻿namespace FastEndpointTemplate.Application.Test.Handlers.WeatherForecasts;
+﻿using FastEndpointTemplate.Application.Handlers;
+
+namespace FastEndpointTemplate.Application.Test.Handlers.WeatherForecasts;
 
 public class GetAllWeatherForecastsHandlerTest
 {
+    private readonly IGetAllWeatherForecastHandler _handler;
+
+    public GetAllWeatherForecastsHandlerTest()
+    {
+        var context = ContextUtil.GetContext();
+        var repository = new WeatherForecastRepository(context);
+        _handler = new GetAllWeatherForecastHandler(repository);
+    }
+
     [Fact]
-    public async Task ShouldGetAllWeatherForecasts_Valid()
+    public async Task Request_Should_Return()
     {
-        // Arrange
-        var context = ContextUtil.GetContext();
-        var repository = new WeatherForecastRepository(context);
-        var handler = new GetAllWeatherForecastHandler(repository);
+        var result = await _handler.HandleAsync(null, default);
 
-        var result = await handler.HandleAsync(null, CancellationToken.None);
-        Assert.NotNull(result);
+        result.Should()
+            .NotBeNull();
     }
 
     [Theory]
@@ -36,17 +44,15 @@ public class GetAllWeatherForecastsHandlerTest
     [InlineData("temperatureCelsius", "-2000", "LessThan")]
     [InlineData("temperatureCelsius", "-2000", "LessThanOrEqual")]
     [InlineData("temperatureCelsius", "-2000", "Fail")]
-    public async Task ShouldGetWeatherByQuery_NotNull(string key, string value, string operation)
+    public async Task Query_Should_Return_Something(string key, string value, string operation)
     {
-        // Arrange
-        var context = ContextUtil.GetContext();
-        var repository = new WeatherForecastRepository(context);
-        var handler = new GetAllWeatherForecastHandler(repository);
-
         var param = $"dtInsert=[Equal,0]&dtUpdate=[Equal,0]&{key}=[{operation},{value}]";
 
-        var result = await handler.HandleAsync(param, CancellationToken.None);
-        Assert.NotNull(result);
+        var result = await _handler.HandleAsync(param, default);
+
+        result
+            .Should()
+            .NotBeNull();
     }
 
     [Theory]
@@ -71,15 +77,13 @@ public class GetAllWeatherForecastsHandlerTest
     [InlineData("temperatureCelsius", "-2000", "LessThan")]
     [InlineData("temperatureCelsius", "-2000", "LessThanOrEqual")]
     [InlineData("temperatureCelsius", "-2000", "Fail")]
-    public async Task ShouldGetWeatherByQuery_Null(string key, string value, string operation)
+    public async Task Query_Should_Return(string key, string value, string operation)
     {
-        // Arrange
-        var repository = new WeatherForecastForNullRepository();
-        var handler = new GetAllWeatherForecastHandler(repository);
-
         var param = $"dtInsert=[Equal,0]&dtUpdate=[Equal,0]&{key}=[{operation},{value}]";
 
-        var result = await handler.HandleAsync(param, CancellationToken.None);
-        Assert.NotNull(result);
+        var result = await _handler.HandleAsync(param, default);
+        result
+            .Should()
+            .NotBeNull();
     }
 }

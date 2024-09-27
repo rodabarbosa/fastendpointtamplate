@@ -6,11 +6,21 @@ public class ErrorContractTest
     public void ErrorContract_Constructor()
     {
         var error = new ErrorContract();
-        Assert.NotNull(error);
-        Assert.Equal(0, error.Code);
-        Assert.Null(error.Error);
-        Assert.Null(error.Exception);
-        Assert.Null(error.Exception);
-        Assert.Null(error.StackTrace);
+
+        error.Code
+            .Should()
+            .Be(400);
+
+        error.Error
+            .Should()
+            .BeNull();
+
+        error.Exception
+            .Should()
+            .BeNull();
+
+        error.StackTrace
+            .Should()
+            .BeNull();
     }
 }

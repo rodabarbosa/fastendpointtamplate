@@ -7,8 +7,13 @@ public class CreateWeatherForecastContractTest
     {
         var testObject = new CreateWeatherForecastRequestContract();
 
-        Assert.NotNull(testObject);
-        Assert.Null(testObject.WeatherForecast);
+        testObject
+            .Should()
+            .NotBeNull();
+
+        testObject.WeatherForecast
+            .Should()
+            .BeNull();
     }
 
     [Fact]
@@ -25,8 +30,17 @@ public class CreateWeatherForecastContractTest
             }
         };
 
-        Assert.NotNull(testObject);
-        Assert.NotNull(testObject.WeatherForecast);
-        Assert.Equal(32, testObject.WeatherForecast.TemperatureFahrenheit);
+        testObject
+            .Should()
+            .NotBeNull();
+
+        testObject.WeatherForecast
+            .Should()
+            .NotBeNull();
+
+        testObject.WeatherForecast
+            .TemperatureFahrenheit
+            .Should()
+            .Be(32);
     }
 }

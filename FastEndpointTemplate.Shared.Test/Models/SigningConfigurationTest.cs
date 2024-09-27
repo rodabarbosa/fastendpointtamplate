@@ -7,8 +7,16 @@ public class SigningConfigurationTest
     {
         var signingConfiguration = new SigningConfiguration();
 
-        Assert.NotNull(signingConfiguration);
-        Assert.NotNull(signingConfiguration.Key);
-        Assert.NotNull(signingConfiguration.SigningCredentials);
+        signingConfiguration
+            .Should()
+            .NotBeNull();
+
+        signingConfiguration.Key
+            .Should()
+            .NotBeNull();
+
+        signingConfiguration.SigningCredentials
+            .Should()
+            .NotBeNull();
     }
 }

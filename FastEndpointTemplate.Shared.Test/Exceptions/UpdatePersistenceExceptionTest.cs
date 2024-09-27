@@ -9,35 +9,53 @@ public class UpdatePersistenceExceptionTest
     [InlineData(null, false)]
     public void ThrowException_Param(string? message, bool throws)
     {
+        var action = () => UpdatePersistenceException.ThrowIf(throws, message);
         if (throws)
-            Assert.Throws<UpdatePersistenceException>(() => UpdatePersistenceException.ThrowIf(throws, message));
+            action
+                .Should()
+                .Throw<UpdatePersistenceException>();
         else
-        {
-            UpdatePersistenceException.ThrowIf(throws, message);
-            Assert.True(!throws);
-        }
+            action
+                .Should()
+                .NotThrow();
     }
 
     [Fact]
     public void ThrowException_Constructor()
     {
         var exception = new UpdatePersistenceException();
-        Assert.NotNull(exception.Message);
-        Assert.Null(exception.InnerException);
+
+        exception.Message
+            .Should()
+            .NotBeNull();
+
+        exception.InnerException
+            .Should()
+            .BeNull();
     }
 
     [Fact]
     public void ThrowException_Constructor1()
     {
         var exception = new UpdatePersistenceException("Test Exception");
-        Assert.Equal("Test Exception", exception.Message);
-        Assert.Null(exception.InnerException);
+
+        exception.Message
+            .Should()
+            .Be("Test Exception");
+
+        exception.InnerException
+            .Should()
+            .BeNull();
     }
 
     [Fact]
     public void ThrowException_Constructor2()
     {
         var exception = new UpdatePersistenceException(new Exception("Test Exception"));
-        Assert.Equal("Test Exception", exception.InnerException?.Message);
+
+        exception.InnerException!
+            .Message
+            .Should()
+            .Be("Test Exception");
     }
 }

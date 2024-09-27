@@ -76,9 +76,13 @@ public sealed class GetAllWeatherForecastHandler(IWeatherForecastRepository weat
     private IQueryable<WeatherForecast>? GetWeatherForecast(string? param)
     {
         var weathers = weatherForecastRepository.Get();
+        if(string.IsNullOrEmpty(param))
+            return weathers;
+
         weathers = FilterByDate(weathers, param!);
         weathers = FilterByTemperatureCelsius(weathers, param!);
         weathers = FilterByTemperatureFahrenheit(weathers, param!);
+
         return weathers;
     }
 
@@ -148,15 +152,19 @@ public sealed class GetAllWeatherForecastHandler(IWeatherForecastRepository weat
     private static IQueryable<WeatherForecast>? FilterByTemperatureFahrenheit(IQueryable<WeatherForecast>? weathers, string param)
     {
         var filter = ExtractTemperatureFahrenheitParam(param);
+        if(filter is null)
+            return weathers;
 
+        const int decimalHolders = 1;
+        var filterValue = Math.Round(filter!.Value, 1);
         return filter?.Operation switch
         {
-            Operation.GreaterThan => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit() > filter.Value),
-            Operation.LessThan => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit() < filter.Value),
-            Operation.Equal => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit() == filter.Value),
-            Operation.NotEqual => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit() != filter.Value),
-            Operation.GreaterThanOrEqual => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit() >= filter.Value),
-            Operation.LessThanOrEqual => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit() <= filter.Value),
+            Operation.GreaterThan => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit(decimalHolders) > filterValue),
+            Operation.LessThan => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit(decimalHolders) < filterValue),
+            Operation.Equal => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit(decimalHolders) == filterValue),
+            Operation.NotEqual => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit(decimalHolders) != filterValue),
+            Operation.GreaterThanOrEqual => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit(decimalHolders) >= filterValue),
+            Operation.LessThanOrEqual => weathers?.Where(w => w.TemperatureCelsius.ToFahrenheit(decimalHolders) <= filterValue),
             _ => weathers
         };
     }
