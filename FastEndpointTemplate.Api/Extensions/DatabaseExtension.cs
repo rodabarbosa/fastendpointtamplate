@@ -9,7 +9,10 @@ public static class DatabaseExtension
 {
     public static void AddDatabase(this IServiceCollection services, string connectionString)
     {
-        services.AddDbContext<ApplicationContext>(o => o.UseInMemoryDatabase(connectionString));
+        services.AddDbContext<ApplicationContext>(o => o
+            .UseInMemoryDatabase(connectionString)
+            .EnableDetailedErrors()
+            .EnableSensitiveDataLogging());
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IWeatherForecastRepository, WeatherForecastRepository>();
