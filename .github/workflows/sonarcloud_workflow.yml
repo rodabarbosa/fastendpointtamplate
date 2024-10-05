@@ -36,10 +36,10 @@ jobs:
                 run: |
                     New-Item -Path .\.sonar\scanner -ItemType Directory
                     dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-#            -   name: Install coverlet
-#                shell: powershell
-#                run: |
-#                    dotnet tool install dotnet-reportgenerator-globaltool --tool-path .\.sonar\scanner
+            -   name: Install coverlet
+                shell: powershell
+                run: |
+                    dotnet tool install dotnet-reportgenerator-globaltool --tool-path .\.sonar\scanner
             -   name: Build and analyze
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -50,5 +50,5 @@ jobs:
                     .\.sonar\scanner\dotnet-sonarscanner begin /k:"rodabarbosa_fastendpointtamplate" /o:"rodabarbosa" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.coverageReportPaths=".\sonarqubecoverage\SonarQube.xml"
                     dotnet build
                     dotnet test --no-build --collect:"XPlat Code Coverage"
-                    .\.sonar\scanner\reportgenerator "-reports:*\TestResults\*\coverage.cobertura.xml" "-targetdir:sonarqubecoverage" "-reporttypes:SonarQube"
+                    .\.sonar\scanner\reportgenerator "-reports:**/coverage.cobertura.xml" "-targetdir:sonarqubecoverage" "-reporttypes:SonarQube"
                     .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
